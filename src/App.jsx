@@ -117,7 +117,16 @@ export default function App() {
       <footer className="w-full max-w-[1200px] mx-auto px-8 pb-10">
         <div className="border-t border-stone-200 pt-5 text-center">
           <p className="text-[0.72rem] text-stone-400">
-            {profile.footer.text} &mdash;{' '}
+            {profile.footer.text}{' '}
+            <a
+              href={profile.footer.floss.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand-blue hover:opacity-60"
+            >
+              {profile.footer.floss.label}
+            </a>
+            &mdash;{' '}
             <a
               href={profile.footer.repo.href}
               target="_blank"
