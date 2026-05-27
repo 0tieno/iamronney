@@ -5,6 +5,7 @@ import About from './components/sections/About'
 import Conferences from './components/sections/Conferences'
 import Achievements from './components/sections/Achievements'
 import Posts from './components/sections/Posts'
+import NotFound from './components/sections/NotFound'
 import { navItems, profile } from './data/content'
 
 const SECTION_MAP = {
@@ -13,22 +14,50 @@ const SECTION_MAP = {
   conferences:  Conferences,
   achievements: Achievements,
   posts:        Posts,
+  'not-found':  NotFound,
 }
 
 const VALID_IDS = Object.keys(SECTION_MAP)
 
 function getInitialSection() {
+  if (window.location.pathname !== '/') {
+    return 'not-found'
+  }
+
   const hash = window.location.hash.slice(1)
-  return VALID_IDS.includes(hash) ? hash : 'work'
+  if (!hash) {
+    return 'work'
+  }
+
+  return VALID_IDS.includes(hash) ? hash : 'not-found'
 }
 
 export default function App() {
   const [active, setActive] = useState(getInitialSection)
 
   useEffect(() => {
+    const syncFromUrl = () => {
+      setActive(getInitialSection())
+    }
+
+    window.addEventListener('hashchange', syncFromUrl)
+    window.addEventListener('popstate', syncFromUrl)
+
+    return () => {
+      window.removeEventListener('hashchange', syncFromUrl)
+      window.removeEventListener('popstate', syncFromUrl)
+    }
+  }, [])
+
+  useEffect(() => {
     const label = navItems.find((n) => n.id === active)?.label ?? ''
-    document.title = `Ronney${label ? ` — ${label}` : ''}`
-    history.replaceState(null, '', `#${active}`)
+    document.title = active === 'not-found'
+      ? 'Ronney — 404 Not Found'
+      : `Ronney${label ? ` — ${label}` : ''}`
+
+    if (active !== 'not-found') {
+      history.replaceState(null, '', `#${active}`)
+    }
   }, [active])
 
   const ActiveSection = SECTION_MAP[active]
