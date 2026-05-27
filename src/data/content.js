@@ -29,6 +29,24 @@ export const navItems = [
 // ─── Posts ───────────────────────────────────────────────────────────────────
 export const posts = [
     {
+        slug: 'ceo-kigogo-and-psalms-37',
+        title: 'CEO, Kigogo, and the Prayers I Still Carry',
+        date: 'May 27, 2026',
+        tag: 'Personal',
+        excerpt:
+            'From being called kigogo in high school to graduating university, I am learning to hold people\'s words with humility and hand the timeline to God.',
+        body: [
+            'People call me CEO these days. Sometimes I wonder whether I was the one who started that name or whether it came from them. Either way, I receive it with a smile and with caution, because titles are easy to wear and hard to justify.',
+            'Long before CEO, in high school they called me kigogo. In Swahili it points to a leader, someone people expect to stand in front. It was also the title of a set book we studied in our time, and we were among the last group to do it. So the word stayed with me in more than one way: in class, in jokes, in identity, and in expectation.',
+            'When I think about expectations, I always go back to class three in 2011. My beloved teacher, Mr Agin, could cane me for not scoring 100% in mathematics. He would tell me directly that he wanted me to become a professor. At the time it felt harsh and impossible. But hidden in that pressure was a strange kind of belief: someone seeing a future in me that I could not yet see for myself.',
+            'Now I have just graduated from my undergraduate studies. That sentence alone carries years of prayers, fear, fatigue, and grace. I am grateful. But I am also honest enough to admit that some of the things people speak over my life still look hard from where I stand right now. Leadership. Influence. Higher learning. Bigger responsibility. They sound beautiful, but they can feel distant when you are inside the process.',
+            'Still, I do not despise those words. If people are calling me CEO, if they once called me kigogo, if a teacher once disciplined me because he could see professor in me, then maybe those words are not pressure only. Maybe they are prayer in another form.',
+            'So this is my response to all the good wishes people have spoken over my life: may the God of Heaven answer their prayers. May He purify what is ego, preserve what is purpose, and complete what He started. May He teach me to carry titles with humility, to carry influence with responsibility, and to carry success without forgetting where I came from.',
+            'Psalms 37:4-5 has become very personal to me: delight yourself in the Lord, and He will give you the desires of your heart; commit your way to the Lord, trust also in Him, and He shall bring it to pass. This is where I stand today. Not on certainty about timelines, but on trust in God\'s faithfulness.',
+            'If these dreams seem hard from my perspective, God of Heaven, God of all these people, bring them to pass.',
+        ],
+    },
+    {
         slug: 'on-hobbies-usefulness-sleep-and-words',
         title: 'On Hobbies, Sleep, Words, and Being Useful',
         date: 'May 27, 2026',
