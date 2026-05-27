@@ -4,6 +4,7 @@ import Work from './components/sections/Work'
 import About from './components/sections/About'
 import Conferences from './components/sections/Conferences'
 import Achievements from './components/sections/Achievements'
+import Posts from './components/sections/Posts'
 import { navItems, profile } from './data/content'
 
 const SECTION_MAP = {
@@ -11,6 +12,7 @@ const SECTION_MAP = {
   about:        About,
   conferences:  Conferences,
   achievements: Achievements,
+  posts:        Posts,
 }
 
 const VALID_IDS = Object.keys(SECTION_MAP)
