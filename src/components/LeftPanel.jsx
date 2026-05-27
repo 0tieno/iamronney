@@ -39,7 +39,7 @@ export default function LeftPanel() {
 
       {/* Avatar — place your photo at public/profile.png */}
       <img
-        src="/profile-pic.jpeg"
+        src={`${import.meta.env.BASE_URL}profile-pic.jpeg`}
         alt={profile.name}
         className="w-32 h-32 rounded-full object-cover object-top mb-6 grayscale hover:grayscale-0 transition-all duration-300"
       />
