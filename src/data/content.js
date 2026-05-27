@@ -29,6 +29,50 @@ export const navItems = [
 // ─── Posts ───────────────────────────────────────────────────────────────────
 export const posts = [
     {
+        slug: 'a-note-to-myself',
+        title: 'A Note to Myself',
+        date: 'May 27, 2026',
+        tag: 'Personal',
+        excerpt:
+            'On God, love, parents, the mind, and what a good life actually looks like from the inside.',
+        body: [
+            'Ronney,',
+            'Start here: you are loved. Not because of what you have built or what you will build. Not because of the GitHub repositories or the conference talks or the security audits. Before any of that, and after all of it, you are loved. By God first. By your parents second. And somewhere in that order, by the parts of yourself you have not yet learned to be patient with.',
+            'God is not a career mentor. He is not a productivity hack. He is the reason you still believe that what you do matters even on the days when it is invisible, unrewarded, and uncertain. You have been in rooms that felt too big for you. You have taken on things that felt too heavy. You are still here. That is not coincidence and it is not just your intelligence. It is grace. Do not get so busy being competent that you forget who held you up when competence was not enough.',
+            'Your parents. Write that word and sit with it. They fetched water too. They woke up early in ways you will never fully understand, made decisions with information you will never have access to, and believed in a version of you that did not exist yet. Everything you are building — the career, the reputation, the name you are making — it is also for them. Not because they asked for it. Because some things are worth doing for people who do not ask.',
+            'On love: do not be afraid of it. You are good at systems. You are good at logic. Love does not run on either of those things and that is exactly why it matters. Let people in. Let them see the version of you that does not have a polished answer. The version that is tired, that doubts, that needs. That version is also worth knowing. Someone will think so. Maybe someone already does.',
+            'On the mind: feed it. This is not a performance instruction. Feed it because the life of the mind is one of the few things that does not diminish when you share it. Read widely. Read things that have nothing to do with your career. Read poetry. Read history. Read about how empires fail and how ideas survive them. Think slowly when the world is rushing. Think out loud when you trust the room. Write even when nobody is reading — because writing is not just expression, it is how you find out what you actually believe.',
+            'On the good life: it is simpler than the internet makes it look. A good life has people in it who are honest with you. It has work that is meaningful, not always exciting, but meaningful. It has enough solitude to hear yourself think and enough community to remember why thinking alone is not sufficient. It has moments of genuine laughter — the kind that surprises you. It has food you enjoy without guilt. It has sleep. It has faith. It has a few deep friendships and a lot of acquaintances you are kind to anyway.',
+            'You are allowed to want more than survival. You are allowed to want comfort, beauty, rest, joy. Ambition and contentment are not opposites. You can want to change things and also be grateful for what is. You do not have to choose between hunger and peace.',
+            'On identity: you are not your productivity. You are not your output. You are not the sum of your commits or your certifications or the roles you have held. Those things describe what you have done. They do not describe what you are. What you are is harder to articulate and more important. You are someone who cares. Someone who shows up. Someone who, when it matters, tells the truth even when it costs something.',
+            'On failure: you will fail more. That is not a warning — it is a promise that the life you are building is big enough for failure to be possible. Small lives do not have interesting failures. Fail honestly. Learn specifically. Do not turn failure into an identity but do not run from it either. Sit with what went wrong until you understand it. Then move.',
+            'On time: you are 23. You have already done things that surprised people. You have more years ahead of you than behind you. Stop pretending that you are running out of time. You are not. What you are running out of is permission from yourself to take those years slowly, to let things develop, to not know the answer yet. Give yourself that permission.',
+            'On God again — because it bears repeating: pray. Not because prayer is a system that produces outcomes. Because it is honest. Because it is the moment in the day when you admit that you are not, in fact, in control of everything. Because there is something that happens in that honesty that does not happen anywhere else. Pray when things are good. Especially then.',
+            'You are loved, Ronney. You are enough. Keep going.',
+        ],
+    },
+    {
+        slug: 'paid-for-my-judgement',
+        title: 'I Want to Be Paid for My Judgement',
+        date: 'May 27, 2026',
+        tag: 'Essay',
+        excerpt:
+            'The robot, AI can do the work. I want to be the one in the room whose call it is. That is all I have ever wanted from a career.',
+        body: [
+            'There is a line I keep coming back to, one I say in interviews and in conversations and to myself at 2am when I am wondering if any of this is worth it: I want to be paid for my judgement.',
+            'Not for my hands. Not for my execution. Not for the hours I put in. For my judgement. For the fact that when the system is on fire and everyone is guessing, I want to be the person in the room whose read of the situation is correct. Whose call gets made. Whose opinion changes the direction of the decision.',
+            'The AI can write the code. The tools can run the scans. The automation can deploy the service, monitor the metrics, and even surface the anomalies. We are not far from a world where most of the execution work I do today is done by a machine faster and more cheaply than I can do it. I am not scared of that. I am counting on it. Because when the machine has done all the work, someone still has to decide what to do with the result. Someone has to answer the question the machine cannot answer: what does this mean? What do we do? Is this the right trade-off?',
+            'That is judgement. And that is what I am building towards.',
+            'Judgement is not something you are born with. It is built from being wrong enough times that you start to understand the shape of your own blind spots. It is built from reading widely — not just technical documentation but history, economics, psychology, anything that helps you understand why systems fail and why people make the choices they make. It is built from being in rooms where decisions are made and paying very close attention to what information mattered and what did not.',
+            'This is why I upskill constantly. Not because I enjoy studying. Not because I am afraid of being left behind. Because every skill I add is another dimension of context that sharpens my judgement. When I know how an attack works, I make better architecture decisions. When I understand distributed systems, I make better trade-off calls. When I have seen a project fail, I know which warning signs to take seriously. The skills are not the point. The judgement they build is the point.',
+            'This is also why I apply for roles that most people would say are above my experience level. I am not applying because I am arrogant about what I can do. I am applying because those are the rooms where judgement matters. In a junior role, the decisions are made for you. Someone else decides what to build, how to build it, and what to do when it breaks. You execute. That is fine. It is how you learn. But it is not where I want to stay.',
+            'Whether it is my own company or someone else\'s, I do not care much. I am not attached to the founder identity. I am not attached to being an employee. What I care about is being the person whose input changes the outcome. Who gets called when the situation is unclear. Who is trusted to look at a problem and say: here is what is actually happening, and here is what we should do.',
+            'If I die having achieved one career thing, this is it. Not a title. Not a salary number. Not a company logo on my CV. Just the knowledge that, when it mattered, my judgement was trusted and it was right often enough to be worth something.',
+            'That is what I am working for. Every day, every commit, every course, every conference, every uncomfortable conversation I have because I believe something different from the person I am talking to. All of it is in service of becoming someone whose judgement is worth paying for.',
+            'The machine can do the work. I want to decide what the work means.',
+        ],
+    },
+    {
         slug: 'on-being-23',
         title: 'On Being 23 (And Everyone Thinking I am 33)',
         date: 'May 27, 2026',
@@ -139,38 +183,6 @@ export const posts = [
             'CTFs helped me get there faster than anything else. Not because the challenges mirror real work — they often do not — but because they forced me to be wrong quickly and learn from it. In a CTF you get immediate feedback. You either get the flag or you do not. That tight loop builds instincts that take years to develop otherwise.',
             'If I were starting over today I would spend the first six months doing nothing but networking fundamentals, Linux internals, and web application basics. I would not touch a fancy tool until I could explain what it was doing at the packet level. That foundation is what lets you adapt when the tool fails, the environment is unusual, or the target does something unexpected.',
             'Security is a long game. The people who stay in it are the ones who find the learning itself rewarding, not just the outcome. I am still very much at the beginning of that game. But I know now that the fundamentals always win.',
-        ],
-    },
-    {
-        slug: 'nixos-reproducible-security-tooling',
-        title: 'NixOS and Reproducible Environments for Security Tooling',
-        date: 'Mar 3, 2026',
-        tag: 'DevSecOps',
-        excerpt:
-            'How I used Nix derivations during my Outreachy internship to package security tooling with deterministic builds and zero dependency drift.',
-        body: [
-            'One of the strangest problems in security tooling is that the tools themselves are often a liability. You download a scanner, it pulls in six transitive dependencies pinned to ancient versions, and suddenly your "security environment" is a collection of known vulnerabilities held together by hope and a legacy Python runtime. I spent a good part of my Outreachy internship with the NixOS team thinking about this problem.',
-            'Nix solves dependency management differently from every package manager you have used before. Instead of mutating a shared global state, every package lives in its own content-addressed path in the Nix store. Two versions of the same tool can coexist without conflict. Rollbacks are trivial. Reproducibility is guaranteed by the hash of the build inputs, not by a lockfile that can drift.',
-            'For security tooling specifically, this matters for two reasons. First, auditability: when you can describe the exact build graph of your tool as a declarative expression, you can audit it. You can diff it. You can see exactly what changed between versions. Second, portability: a Nix derivation that works on my machine works on your machine and works in CI because it is describing a build, not depending on ambient state.',
-            'The work I did involved packaging several tools from the NGI (Next Generation Internet) ecosystem so they could be distributed through nixpkgs. Writing a derivation for a Go binary is straightforward once you understand the pattern. Writing one for a tool with complex native dependencies, or one that downloads things at build time (a Nix anti-pattern), is where you start learning what Nix is actually doing.',
-            'The lesson I kept coming back to was that reproducibility is a form of honesty. A tool that builds differently on different machines is a tool that is lying to you about what it is. Nix forces you to be explicit about every input, which is uncomfortable at first and then deeply clarifying.',
-            'I came into this internship as a security engineer who used Linux. I left it thinking differently about what it means to trust software. That is the kind of internship worth doing.',
-        ],
-    },
-    {
-        slug: 'mobile-threat-modelling',
-        title: 'Mobile Threat Modelling: Notes from the Lab',
-        date: 'Jan 18, 2026',
-        tag: 'Mobile Security',
-        excerpt:
-            'A practical look at threat modelling Android applications — attack surfaces, common misconfigurations, and what a good test report looks like.',
-        body: [
-            'Mobile security has a reputation for being a niche. People assume it is the same as web security with a smaller screen. It is not. The attack surface is different, the trust boundaries are different, and the toolchain is different. After the Mobile Hacking Lab fellowship I have a much more grounded view of what actually goes wrong in Android applications.',
-            'Threat modelling is where most mobile assessments should start but rarely do. Before you open Burp or run apktool, you should be asking: what does this application do? What data does it handle? Where does that data go? Who are the realistic attackers? A banking app has a different threat profile than a fitness tracker, and your assessment should reflect that.',
-            'The attack surface of an Android application has several layers. The APK itself: exported activities, content providers, broadcast receivers that can be called by other applications without permission. The network layer: certificate pinning bypasses, cleartext traffic, API endpoints that assume the client is trusted. The data layer: insecure storage in SharedPreferences, world-readable files, sensitive data in logs. The most interesting vulnerabilities I found during the fellowship were almost always at the intersection of two of these layers.',
-            'Common misconfigurations that keep appearing: exported components with no permission check, deeplinks that accept arbitrary input without validation, API tokens hardcoded in the build config, WebViews with JavaScript enabled and no allowlist on the schemes they handle. None of these are novel. They appear in OWASP Mobile Top 10. They still ship in production applications in 2026.',
-            'A good report does three things. It describes the vulnerability clearly enough that a developer who did not write the code can understand it. It explains the actual impact — not "this could allow an attacker to..." but what an attacker with this capability could realistically do to a real user. And it gives a remediation that is specific enough to implement, not generic advice to "validate all inputs."',
-            'The hardest part of mobile security is not finding the vulnerabilities. It is communicating them in a way that results in them being fixed. That is a writing and empathy problem as much as a technical one.',
         ],
     },
     {
