@@ -16,7 +16,7 @@ export const profile = {
     footer: {
         text: 'All Code',
         floss: {
-            label: '++ FLOSS and FOSS ',
+            label: 'is FLOSS and FOSS ',
             href: 'https://www.gnu.org/philosophy/floss-and-foss.en.html',
         },
         repo: { label: 'github.repo', href: 'https://github.com/0tieno/iamronney' },
@@ -308,6 +308,7 @@ export const work = {
             contributions: [
                 'This is a voluntary role I applied and got. I am not an employee and I do not receive compensation for this work. ONE DAY MICROSOFT WILL PAY ME FOR ALL THIS WORK I DO NOW. ipo siku',
                 'Contributing as part of an exclusive community of security professionals who directly impact the strategy and roadmap of the Microsoft Security products.',
+                'lots of emails and meetings directly with Microsoft security product teams - cloud security.',
             ],
         },
         {
