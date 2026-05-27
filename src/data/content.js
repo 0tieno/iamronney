@@ -7,13 +7,19 @@ export const profile = {
     ],
     email: 'ronney.onyango.otieno@gmail.com',
     socials: [
-        { label: 'GitHub', href: 'https://github.com/iamronney', external: true },
-        { label: 'LinkedIn', href: '#', external: true },
-        { label: 'Twitter / X', href: '#', external: true },
+        { label: 'GitHub', href: 'https://github.com/0tieno/', external: true },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ronney-otieno/', external: true },
+        { label: 'Twitter / X', href: 'https://x.com/ron_otieno', external: true },
+        { label: 'Backend Blogs', href: 'https://0tieno.github.io/Blog/', external: false },
+        { label: 'secureCloudX', href: 'https://securecloudx.xyz', external: true },
     ],
     footer: {
-        text: 'built with care',
-        repo: { label: 'github.repo', href: 'https://github.com/iamronney/iamronney' },
+        text: 'All Code',
+        floss: {
+            label: '++ FLOSS and FOSS ',
+            href: 'https://www.gnu.org/philosophy/floss-and-foss.en.html',
+        },
+        repo: { label: 'github.repo', href: 'https://github.com/0tieno/iamronney' },
     },
 }
 
