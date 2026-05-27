@@ -29,7 +29,7 @@ export default function LeftPanel() {
 
       {/* Avatar — place your photo at public/profile.png */}
       <img
-        src="/public/profile.png"
+        src="/profile.png"
         alt={profile.name}
         className="w-32 h-32 rounded-full object-cover object-top mb-6 grayscale hover:grayscale-0 transition-all duration-300"
       />
@@ -57,7 +57,7 @@ export default function LeftPanel() {
           <rect x="11" y="11" width="10" height="10" fill="#FFB900" />
         </svg>
         <span className="text-[0.72rem] font-semibold tracking-wide text-[#7A5800] uppercase leading-none">
-          Microsoft Security MVP
+          Microsoft Security MVP - Cloud & DevSecOps
         </span>
         <span className="text-[#FFB900]" aria-hidden="true">★</span>
       </a>
