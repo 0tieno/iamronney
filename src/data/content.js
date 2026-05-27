@@ -29,6 +29,24 @@ export const navItems = [
 // ─── Posts ───────────────────────────────────────────────────────────────────
 export const posts = [
     {
+        slug: 'on-hobbies-usefulness-sleep-and-words',
+        title: 'On Hobbies, Sleep, Words, and Being Useful',
+        date: 'May 27, 2026',
+        tag: 'Personal',
+        excerpt:
+            'I do not always have a polished answer for hobbies. What I really do is try to be useful, make things, write things, and sleep enough to stay human.',
+        body: [
+            'People ask me about hobbies all the time. What do you do when you are not doing tech? What do you do for fun? And the honest answer is that I do not always have the kind of polished, packaged response people expect. I do not have a neat hobby bucket that I can pull out and present with a smile. What I have is a way of living. I refuse that old universal classification thing. People are different. I do not think of myself as someone who works hard and then relaxes by doing something completely different.',
+            'What I always seem to do, no matter the sphere, is try to be useful. Socially, in church, in tech, in career things, with family, with friends — I want to show up in a way that helps. Not in a loud way. Not in a performative way. Just in a way that makes the room better than it was before I entered it. I do not know whether that counts as a hobby, but it is definitely something I do.',
+            'I care about being useful because it feels like the most honest expression of who I am. If someone needs support, I want to be there. If a conversation needs thoughtfulness, I want to bring it. If a project needs someone to think deeply, I want to be that person. If a friend needs a steady presence, I want to be steady. If church needs service, I want to serve. If family needs me, I want them to know I am not far away. Utility is not the only thing that matters in life, but it is one of the things that keeps me grounded.',
+            'Outside of usefulness, I do have things that feel like hobbies, even if I do not always name them that way. I like art. I like drawing. I like words. I like the shape of language, the weight of a sentence, the way a phrase can land softly or cut straight through. Words amaze me. They can carry grief, affection, conviction, beauty, and memory all at once. Sometimes I sit with a line until it starts to sound like music. Sometimes I write because I cannot keep the thought inside my head any longer.',
+            'Poetry is one of the places where that love for words becomes personal. I write poems sometimes for my girlfriend, and sometimes for myself. For her, because love deserves language. For myself, because sometimes I need to hear my own heart say the thing I have been avoiding. Poetry lets me be honest in a way that ordinary speech does not always allow. It gives me a place to be soft, strange, and exact all at once.',
+            'Sleep is another thing I care about deeply. Sleep is my superpower. Without it I am a zombie — not dramatic, just true. I lose sharpness. I lose patience. I lose the best version of my mind. Sleep makes me better at everything else: better at thinking, better at working, better at loving people, better at seeing what matters. I used to think sleep was just rest. Now I know it is maintenance for the soul and the brain.',
+            'There is something strange and beautiful about the fact that my hobbies do not always look like hobbies. Sometimes they look like service. Sometimes they look like being present. Sometimes they look like art. Sometimes they look like a nap. But all of it is part of the same life. I do not think of myself as a person who splits cleanly into work and non-work. I think of myself as a person trying to be whole.',
+            'So if you ask me now what I do when I am not doing tech, I might still fumble the answer. But maybe the truest one is this: I try to be useful. I try to make beautiful things. I try to understand words. I try to love people well. I try to sleep. I try to keep becoming a fuller human being. That is enough for me.',
+        ],
+    },
+    {
         slug: 'a-note-to-myself',
         title: 'A Note to Myself',
         date: 'May 27, 2026',
