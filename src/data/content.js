@@ -249,49 +249,51 @@ export const work = {
         { role: 'Mobile Security Fellowship', company: 'Mobile Hacking Lab', period: 'Jul – Nov, 2024' },
     ],
     secondary: [
-        {
-            role: 'Security Analyst',
-            company: 'Global TTC',
-            period: 'May – Aug, 2023',
-            contributions: [
-                'Performed security assessments and documented actionable findings for web systems.',
-                'Supported incident response workflows and hardening recommendations.',
-            ],
-        },
+        // {
+        //     role: 'Security Analyst',
+        //     company: 'Global TTC',
+        //     period: 'Incoming by faith',
+        //     contributions: [
+        //         'Performed security assessments and documented actionable findings for web systems.',
+        //         'Supported incident response workflows and hardening recommendations.',
+        //     ],
+        // },
         {
             role: 'Backend SWE',
             company: 'Safaricom PLC',
-            period: "2022 – '23",
+            period: "2025 – 'Present",
             contributions: [
-                'Built backend service features and API integrations for internal platforms.',
-                'Improved reliability through testing, monitoring, and iterative optimization.',
+                'Safaricom is the biggest corporate technology company in the country (Kenya, Ethiopia) controlling about 80% of all mobile money and mobile service usage in the country. Developed solutions here hit users in the millions per week. Currently close to 60 million subscribers in one Network. It runs the biggest fintech platform [Mpesa] in Africa. It is all about transforming Lives!',
+                'Part of my code is in production transforming those lives',
+                'Joined as an intern, internship ended. I am still here at safaricom.'
             ],
         },
         {
             role: 'Software Engineer',
             company: 'Verge Advisory Partners',
-            period: "2022 – '23",
+            period: "2025 – 'Present",
             contributions: [
-                'Delivered software components aligned to business and advisory use cases.',
-                'Collaborated across product and engineering to ship maintainable features.',
+                'Delivered software tools that the business loved and used.',
+                'I debug them all the time. I know why.',
             ],
         },
         {
             role: 'Security Advisor',
             company: 'Microsoft',
-            period: "2022 – '23",
+            period: "2025 – 'Present",
             contributions: [
-                'Delivered software components aligned to business and advisory use cases.',
-                'Collaborated across product and engineering to ship maintainable features.',
+                'This is a voluntary role I applied and got. I am not an employee and I do not receive compensation for this work. ONE DAY MICROSOFT WILL PAY ME FOR ALL THIS WORK I DO NOW. ipo siku',
+                'Contributing as part of an exclusive community of security professionals who directly impact the strategy and roadmap of the Microsoft Security products.',
             ],
         },
         {
             role: 'Open Source Creator',
             company: 'secureCloudX',
-            period: "2022 – '23",
+            period: "2025 – 'Present",
             contributions: [
-                'Designed and published open-source security tooling and project documentation.',
-                'Maintained community-facing improvements through issues and pull requests.',
+                'Designed and created a community platform for people who want to learn cloud security for free. The platform currently experiences high usage recently registering 400 monthly visits. Even if it was one person using it. I could still maintain it because that one person is me.',
+                'I dont even market it as much as I would want to.',
+                'Visit [https://securecloudx.xyz]',
             ],
         },
         {
