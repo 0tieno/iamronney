@@ -26,7 +26,7 @@ export default function About() {
       <ul className="list-disc pl-6 space-y-2 text-[0.9rem] text-stone-900 leading-[1.65] mb-9">
         <li>
           I maintain{' '}
-          <a href="#" className="text-brand-blue hover:underline">
+          <a href="https://securecloudx.xyz/" className="text-brand-blue hover:underline">
             securecloudX
           </a>{' '}
           - a free &amp; open source platform to learn Cloud Security Engineering &amp; Cloud
@@ -42,7 +42,7 @@ export default function About() {
         <li>Oct 9: [At 22] graduated undergrad.</li>
         <li>
           Sept: [bounced]{' '}
-          <a href="#" className="text-brand-blue hover:underline">
+          <a href="https://expertsliveke.lukekibiku.com/" className="text-brand-blue hover:underline">
             Experts Live Kenya
           </a>{' '}
           Speaker
@@ -50,7 +50,7 @@ export default function About() {
         <li>Aug: [awarded Distinction] Cloud &amp; Network Security</li>
         <li>
           July: Started building professional software for{' '}
-          <a href="#" className="text-brand-blue hover:underline">
+          <a href="https://vergeadvisorypartners.co.ke/" className="text-brand-blue hover:underline">
             .ke
           </a>
         </li>
@@ -62,7 +62,7 @@ export default function About() {
       <h3 className="text-[2rem] font-medium text-stone-900 mb-4">2024</h3>
       <ul className="list-disc pl-6 space-y-1.5 text-[0.9rem] text-stone-900 leading-[1.65] mb-9">
         <li>
-          November 31: [As a Team] recognized by Microsoft ADC as the{' '}
+          November 31: [As a Team] received recognition award by Microsoft ADC as the{' '}
           <a href="#" className="text-brand-blue hover:underline">
             Most Vibrant chapter in Kenya
           </a>
@@ -73,7 +73,7 @@ export default function About() {
       <ul className="list-disc pl-6 space-y-1.5 text-[0.9rem] text-stone-900 leading-[1.65]">
         <li>
           November 31: Joined Global tech program -{' '}
-          <a href="#" className="text-brand-blue hover:underline">
+          <a href="https://mvp.microsoft.com/en-US/studentambassadors/profile/b9a24a24-7cfe-489e-8a76-4a0ad03a3444" className="text-brand-blue hover:underline">
             Microsoft
           </a>
         </li>
