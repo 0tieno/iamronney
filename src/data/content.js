@@ -2,8 +2,8 @@
 export const profile = {
     name: 'i am ronney otieno.',
     taglines: [
-        'hacker(pentester: cloud, web), cyber analysis and defense & ctf player | swe ++founder -- open source creator | speaker - writer - poet | dreamer - thinker - doer -lover of God.',
-        'currently job hunting security & backend roles.',
+        'hacker(offensive & defensive security and ctf player) | swe ++founder -- open source creator | speaker - writer - poet | dreamer - thinker - doer -lover of God.',
+        'hire or refer me for cyber security, backend software engineering or DevSecOps roles. thank you!',
     ],
     email: 'ronney.onyango.otieno@gmail.com',
     socials: [
@@ -23,6 +23,51 @@ export const navItems = [
     { id: 'about', label: 'About' },
     { id: 'conferences', label: 'Conferences, Presentations & Publications' },
     { id: 'achievements', label: 'Achievements, Honors & Awards' },
+    { id: 'posts', label: 'Posts' },
+]
+
+// ─── Posts ───────────────────────────────────────────────────────────────────
+export const posts = [
+    {
+        title: 'Breaking into Security: A Hacker\'s Honest Retrospective',
+        date: 'Apr 12, 2026',
+        tag: 'Security',
+        excerpt:
+            'What nobody tells you about starting in offensive security — the mindset shifts, the rabbit holes, and why the fundamentals still win.',
+        href: '#',
+    },
+    {
+        title: 'NixOS and Reproducible Environments for Security Tooling',
+        date: 'Mar 3, 2026',
+        tag: 'DevSecOps',
+        excerpt:
+            'How I used Nix derivations during my Outreachy internship to package security tooling with deterministic builds and zero dependency drift.',
+        href: '#',
+    },
+    {
+        title: 'Mobile Threat Modelling: Notes from the Lab',
+        date: 'Jan 18, 2026',
+        tag: 'Mobile Security',
+        excerpt:
+            'A practical look at threat modelling Android applications — attack surfaces, common misconfigurations, and what a good test report looks like.',
+        href: '#',
+    },
+    {
+        title: 'On Usefulness: Why I Write, Build, and Keep Showing Up',
+        date: 'Nov 29, 2025',
+        tag: 'Essay',
+        excerpt:
+            'A personal essay on the idea that drives most of what I do: wanting to be genuinely useful — to people, to systems, to the craft.',
+        href: '#',
+    },
+    {
+        title: 'Open Source as a Career Strategy (Not Just Charity)',
+        date: 'Oct 5, 2025',
+        tag: 'Open Source',
+        excerpt:
+            'Contributing to open source changed how I think about visibility, ownership, and building trust with an audience I haven\'t met yet.',
+        href: '#',
+    },
 ]
 
 // ─── Work ────────────────────────────────────────────────────────────────────
