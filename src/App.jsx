@@ -26,6 +26,37 @@ const LABEL_BY_PATH = {
   '/posts': navItems.find(({ id }) => id === 'posts')?.label ?? 'Posts',
 }
 
+const TERMINAL_COMMANDS = [
+  'help',
+  'whoami',
+  'about',
+  'work',
+  'skills',
+  'awards',
+  'achievements',
+  'conferences',
+  'posts',
+  'blog',
+  'home',
+  'contact',
+  'resume',
+]
+
+function sharedPrefix(words) {
+  if (!words.length) {
+    return ''
+  }
+
+  return words.reduce((prefix, word) => {
+    let idx = 0
+    while (idx < prefix.length && idx < word.length && prefix[idx] === word[idx]) {
+      idx += 1
+    }
+
+    return prefix.slice(0, idx)
+  })
+}
+
 export default function App() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -40,6 +71,24 @@ export default function App() {
     () => profile.socials.find(({ label }) => label === 'LinkedIn')?.href,
     []
   )
+
+  const commandMatches = useMemo(() => {
+    const normalizedInput = commandInput.trim().toLowerCase()
+    if (!normalizedInput) {
+      return []
+    }
+
+    return TERMINAL_COMMANDS.filter((command) => command.startsWith(normalizedInput))
+  }, [commandInput])
+
+  const showCommandSuggestions = useMemo(() => {
+    const normalizedInput = commandInput.trim().toLowerCase()
+    if (!normalizedInput || !commandMatches.length) {
+      return false
+    }
+
+    return !(commandMatches.length === 1 && commandMatches[0] === normalizedInput)
+  }, [commandInput, commandMatches])
 
   useEffect(() => {
     const label = LABEL_BY_PATH[pathname] ?? ''
@@ -135,6 +184,32 @@ export default function App() {
   }
 
   function handleCommandInputKeyDown(event) {
+    if (event.key === 'Tab') {
+      const normalizedInput = commandInput.trim().toLowerCase()
+      if (!normalizedInput) {
+        return
+      }
+
+      event.preventDefault()
+      if (!commandMatches.length) {
+        return
+      }
+
+      if (commandMatches.length === 1) {
+        setCommandInput(commandMatches[0])
+        return
+      }
+
+      const prefix = sharedPrefix(commandMatches)
+      if (prefix.length > normalizedInput.length) {
+        setCommandInput(prefix)
+        return
+      }
+
+      setCommandOutput(`Matches: ${commandMatches.slice(0, 6).join(', ')}`)
+      return
+    }
+
     if (event.key === 'ArrowUp') {
       if (!commandHistory.length) {
         return
@@ -249,7 +324,10 @@ export default function App() {
                         id="command-palette"
                         type="text"
                         value={commandInput}
-                        onChange={(event) => setCommandInput(event.target.value)}
+                        onChange={(event) => {
+                          setCommandInput(event.target.value)
+                          setHistoryIndex(-1)
+                        }}
                         onKeyDown={handleCommandInputKeyDown}
                         placeholder="whoami"
                         className="w-full bg-transparent text-[0.78rem] text-stone-800 placeholder:text-stone-400 focus:outline-none"
@@ -264,6 +342,21 @@ export default function App() {
                       </button>
                     </div>
                   </form>
+
+                  {showCommandSuggestions ? (
+                    <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                      {commandMatches.slice(0, 6).map((suggestion) => (
+                        <button
+                          key={suggestion}
+                          type="button"
+                          onClick={() => setCommandInput(suggestion)}
+                          className="rounded-md border border-stone-300 bg-stone-100 px-2 py-0.5 font-mono text-[0.62rem] text-stone-700 hover:bg-stone-200"
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
 
                   <p className="mt-2 font-mono text-[0.66rem] text-stone-600">
                     &gt; {commandOutput}
