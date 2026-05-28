@@ -1,4 +1,6 @@
 export default function NotFound() {
+  const homeHref = `${import.meta.env.BASE_URL}#work`
+
   return (
     <section aria-labelledby="not-found-heading" className="animate-fade-slide-up">
       <p className="text-[0.72rem] font-semibold tracking-[0.22em] uppercase text-brand-green mb-3">
@@ -27,7 +29,7 @@ Hint: try #work, #about, #conferences, #achievements, #posts`}
       </div>
 
       <a
-        href="/#work"
+        href={homeHref}
         className="inline-flex items-center gap-2 text-[0.86rem] font-semibold text-brand-blue hover:text-stone-900 hover:underline underline-offset-[3px]"
       >
         Reboot to home section
