@@ -57,19 +57,35 @@ export default function LeftPanel() {
         target="_blank"
         rel="noreferrer noopener"
         aria-label="Microsoft Security MVP"
-        className="inline-flex items-center gap-2.5 mt-2 mb-5 px-3.5 py-2 rounded-lg border border-[#FFB900]/45 bg-[#FFF9EB] text-[#6E4F00] shadow-[0_1px_0_rgba(0,0,0,0.04)] hover:bg-[#FFF3D6] hover:border-[#FFB900]/60 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB900]/60"
+        className="group relative mt-2 mb-5 block w-full max-w-[290px] overflow-hidden rounded-xl border border-stone-200 bg-white pl-4 pr-3 py-2.5 text-stone-700 shadow-[0_14px_34px_-28px_rgba(0,0,0,0.7)] transition-all duration-300 hover:-translate-y-[1px] hover:border-stone-300 hover:shadow-[0_20px_40px_-26px_rgba(2,132,199,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50"
       >
-        {/* Microsoft logo mark (four squares) */}
-        <svg viewBox="0 0 21 21" width="14" height="14" aria-hidden="true">
-          <rect x="0" y="0" width="10" height="10" fill="#F25022" />
-          <rect x="11" y="0" width="10" height="10" fill="#7FBA00" />
-          <rect x="0" y="11" width="10" height="10" fill="#00A4EF" />
-          <rect x="11" y="11" width="10" height="10" fill="#FFB900" />
-        </svg>
-        <span className="text-[0.74rem] font-semibold tracking-[0.01em] leading-none">
-          Microsoft Security MVP • Cloud & DevSecOps
-        </span>
-        <span className="text-[#E7A900] text-[0.82rem] leading-none" aria-hidden="true">★</span>
+        <span
+          aria-hidden="true"
+          className="absolute left-0 top-0 h-full w-[3px] bg-[linear-gradient(180deg,#00A4EF_0%,#7FBA00_55%,#F25022_100%)]"
+        />
+
+        <div className="flex items-center gap-2.5">
+          {/* Microsoft logo mark (four squares) */}
+          <svg viewBox="0 0 21 21" width="14" height="14" aria-hidden="true" className="shrink-0">
+            <rect x="0" y="0" width="10" height="10" fill="#F25022" />
+            <rect x="11" y="0" width="10" height="10" fill="#7FBA00" />
+            <rect x="0" y="11" width="10" height="10" fill="#00A4EF" />
+            <rect x="11" y="11" width="10" height="10" fill="#FFB900" />
+          </svg>
+
+          <div className="min-w-0">
+            <p className="text-[0.67rem] uppercase tracking-[0.16em] text-stone-400 leading-none mb-1">
+              Microsoft
+            </p>
+            <p className="text-[0.78rem] font-semibold leading-tight text-stone-800">
+              Security MVP • Cloud & DevSecOps
+            </p>
+          </div>
+
+          <span className="ml-auto rounded-full border border-stone-200 px-2 py-0.5 text-[0.62rem] font-semibold tracking-[0.09em] text-sky-700 bg-sky-50/70">
+            MVP
+          </span>
+        </div>
       </a>
 
       <a
