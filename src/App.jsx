@@ -85,15 +85,17 @@ export default function App() {
                 </div>
               }
             >
-              <Routes>
-                <Route path="/" element={<Navigate to="/work" replace />} />
-                <Route path="/work" element={<Work />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/conferences" element={<Conferences />} />
-                <Route path="/achievements" element={<Achievements />} />
-                <Route path="/posts" element={<Posts />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <div key={pathname} className="route-transition-enter">
+                <Routes>
+                  <Route path="/" element={<Navigate to="/work" replace />} />
+                  <Route path="/work" element={<Work />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/conferences" element={<Conferences />} />
+                  <Route path="/achievements" element={<Achievements />} />
+                  <Route path="/posts" element={<Posts />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
             </Suspense>
 
           </main>
