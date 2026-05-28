@@ -186,12 +186,17 @@ export default function App() {
           </div>
 
           {/* Right — scrolls with page */}
-          <main className="order-2 md:order-2 w-full flex-1 min-w-0">
+          <main
+            className={[
+              'order-2 md:order-2 w-full flex-1 min-w-0',
+              terminalUnlocked ? 'p-0' : '',
+            ].join(' ')}
+          >
 
             {terminalUnlocked ? (
-              <section className="mb-5 rounded-xl border border-stone-200 bg-stone-50 p-2.5 md:p-3">
+              <section className="mb-4 pb-3">
                 <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-stone-500">
-                  Terminal Mode
+                  Terminal Mode // {pathname}
                 </p>
 
                 <>
@@ -257,12 +262,12 @@ export default function App() {
 
             <Suspense
               fallback={
-                <div className="py-8 text-[0.9rem] text-stone-500" role="status" aria-live="polite">
+                <div className={['py-8 text-[0.9rem]', terminalUnlocked ? 'font-mono text-stone-600' : 'text-stone-500'].join(' ')} role="status" aria-live="polite">
                   Loading section...
                 </div>
               }
             >
-              <div key={pathname} className="route-transition-enter">
+              <div key={pathname} className={terminalUnlocked ? 'terminal-typing terminal-content' : 'route-transition-enter'}>
                 <Routes>
                   <Route path="/" element={<Navigate to="/work" replace />} />
                   <Route path="/work" element={<Work />} />
