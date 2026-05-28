@@ -1,4 +1,7 @@
+import { useEffect, useMemo, useState } from 'react'
 import { profile } from '../data/content'
+
+const FLAG_PARTS = ['flag', 'iamronney', 'surface', 'mapped']
 
 const icons = {
   GitHub: (
@@ -29,6 +32,36 @@ const icons = {
 }
 
 export default function LeftPanel() {
+  const ctfFlag = useMemo(
+    () => `${FLAG_PARTS[0]}{${FLAG_PARTS[1]}_${FLAG_PARTS[2]}_${FLAG_PARTS[3]}}`,
+    []
+  )
+
+  const [ctfInput, setCtfInput] = useState('')
+  const [ctfSolved, setCtfSolved] = useState(false)
+  const [ctfWrong, setCtfWrong] = useState(false)
+
+  useEffect(() => {
+    const storedState = window.localStorage.getItem('iamronney_ctf_solved')
+    if (storedState === 'true') {
+      setCtfSolved(true)
+    }
+  }, [])
+
+  function handleCtfSubmit(event) {
+    event.preventDefault()
+
+    if (ctfInput.trim().toLowerCase() === ctfFlag) {
+      setCtfSolved(true)
+      setCtfWrong(false)
+      window.localStorage.setItem('iamronney_ctf_solved', 'true')
+      window.dispatchEvent(new Event('iamronney:ctf-solved'))
+      return
+    }
+
+    setCtfWrong(true)
+  }
+
   return (
     <aside className="w-full md:w-[280px] md:shrink-0 md:sticky md:top-16 md:self-start">
 
@@ -111,6 +144,74 @@ export default function LeftPanel() {
           </span>
         </div>
       </a>
+
+      <section className="mt-2 mb-5 rounded-xl border border-stone-200 bg-white p-3">
+        <div className="flex items-center justify-between gap-2">
+          {/* <p className="text-[0.63rem] font-mono uppercase tracking-[0.16em] text-stone-500">
+            CTF // Mini Challenge
+          </p> */}
+          {ctfSolved ? (
+            <span className="rounded-full border border-emerald-200 bg-emerald-100 px-2 py-0.5 text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-emerald-800">
+              solved
+            </span>
+          ) : null}
+        </div>
+
+        <p className="mt-1 text-[0.78rem] text-stone-700">
+          Find the hidden flag in this site and unlock something special.
+        </p>
+
+        <form onSubmit={handleCtfSubmit} className="mt-3">
+          <label htmlFor="ctf-flag" className="sr-only">
+            Enter discovered flag
+          </label>
+          <div className="flex items-center gap-2 rounded-lg border border-stone-200 bg-stone-50 px-2 py-2">
+            <span className="font-mono text-[0.68rem] text-stone-500">$</span>
+            <input
+              id="ctf-flag"
+              type="text"
+              value={ctfInput}
+              onChange={(event) => {
+                setCtfInput(event.target.value)
+                if (ctfWrong) {
+                  setCtfWrong(false)
+                }
+              }}
+              placeholder="flag{...}"
+              className="w-full bg-transparent text-[0.75rem] text-stone-800 placeholder:text-stone-400 focus:outline-none"
+              autoComplete="off"
+              spellCheck="false"
+            />
+            <button
+              type="submit"
+              className="rounded-md border border-stone-300 bg-white px-2 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.08em] text-stone-700 transition-colors hover:bg-stone-100"
+            >
+              Verify
+            </button>
+          </div>
+        </form>
+
+        {ctfSolved ? (
+          <div className="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-2">
+            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.09em] text-emerald-800">
+              Recon Ranger Badge Unlocked
+            </p>
+            <p className="mt-1 text-[0.68rem] text-emerald-700">
+              Surface mapped. Vector confirmed.
+            </p>
+          </div>
+        ) : (
+          <p className="mt-2 text-[0.64rem] font-mono text-stone-500">
+            hint: source-level recon helps.
+          </p>
+        )}
+
+        {ctfWrong ? (
+          <p className="mt-2 text-[0.64rem] font-mono text-rose-600">
+            invalid flag // try again.
+          </p>
+        ) : null}
+      </section>
 
       <a
         href={`mailto:${profile.email}`}
