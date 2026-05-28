@@ -126,12 +126,19 @@ export default function App() {
     event.preventDefault()
 
     const rawCommand = commandInput.trim()
-    const command = rawCommand.toLowerCase()
+    const normalizedCommand = rawCommand.toLowerCase()
+    const hasExactMatch = TERMINAL_COMMANDS.includes(normalizedCommand)
+    const resolvedCommand = !hasExactMatch && commandMatches.length
+      ? commandMatches[0]
+      : normalizedCommand
+
+    const command = resolvedCommand
+
     if (!rawCommand) {
       return
     }
 
-    setCommandHistory((prev) => [...prev, rawCommand])
+    setCommandHistory((prev) => [...prev, command])
     setHistoryIndex(-1)
 
     const routeCommands = {
