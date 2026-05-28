@@ -289,7 +289,8 @@ export const work = {
             contributions: [
                 'Safaricom is the biggest corporate technology company in the country (Kenya, Ethiopia) controlling about 80% of all mobile money and mobile service usage in the country. Developed solutions here hit users in the millions per week. Currently close to 60 million subscribers in one Network. It runs the biggest fintech platform [Mpesa] in Africa. It is all about transforming Lives!',
                 'Part of my code is in production transforming those lives',
-                'Joined as an intern, internship ended. I am still here at safaricom.'
+                'Joined as an intern, internship ended. I am still here at safaricom.',
+                'This is 1 of 2 of my dream company.'
             ],
         },
         {
@@ -297,7 +298,7 @@ export const work = {
             company: 'Verge Advisory Partners',
             period: "2025 – 'Present",
             contributions: [
-                'Delivered software tools that the business loved and used.',
+                'Translated business requirements and delivered end-to-end software tools that the business loved and used.',
                 'I debug them all the time. I know why.',
             ],
         },
@@ -306,7 +307,7 @@ export const work = {
             company: 'Microsoft',
             period: "2025 – 'Present",
             contributions: [
-                'This is a voluntary role I applied and got. I am not an employee and I do not receive compensation for this work. ONE DAY MICROSOFT WILL PAY ME FOR ALL THIS WORK I DO NOW. ipo siku',
+                'This is a voluntary role I applied and got. I am not an employee and I do not receive money compensation for this work. ONE DAY MICROSOFT WILL PAY ME FOR ALL THIS WORK I DO NOW. ipo siku',
                 'Contributing as part of an exclusive community of security professionals who directly impact the strategy and roadmap of the Microsoft Security products.',
                 'lots of emails and meetings directly with Microsoft security product teams - cloud security.',
             ],
