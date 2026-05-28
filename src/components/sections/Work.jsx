@@ -7,7 +7,7 @@ export default function Work() {
         id="work-heading"
         className="text-[2.5rem] font-semibold leading-none tracking-tight text-stone-900 mb-8"
       >
-        <span className="underline decoration-brand-green decoration-[3px] underline-offset-[7px]">Work</span>
+        <span className="rhythm-heading underline decoration-brand-green decoration-[3px] underline-offset-[7px]">Work</span>
       </h2>
 
       {/* Opening statement */}
