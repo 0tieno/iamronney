@@ -35,6 +35,26 @@ export const navItems = [
 // ─── Posts ───────────────────────────────────────────────────────────────────
 export const posts = [
     {
+        slug: 'sable-moon-love-sonnet',
+        title: 'When Moon in Sable Robes Doth Court the Sea',
+        date: 'May 28, 2026',
+        tag: 'Poetry',
+        excerpt:
+            'A rich, Shakespeare-inspired love poem of fire, surrender, devotion, and time.',
+        body: [
+            'When moon in sable robes doth court the sea, And stars, like vows, hang trembling in the height, I learn what tyrant sweetness love may be: A wound that burns, yet crowns the wound with light.',
+            'It came not soft as April on the rose, But as a trumpet through a conquered gate; It broke mine ordered thoughts in bright repose, And taught my blood to keep a nobler state.',
+            'O love, thou art both altar, flame, and knife, The priest that blesseth and the thief that takes; Thou spend\'st my peace to purchase fuller life, And from my sleeping soul a kingdom wakes.',
+            'I was a man of measured breath and bone, Content to walk where common shadows fall; Then thy least glance made all my wisdom none, And set my name to music in thy call.',
+            'What law have I, when thou dost plead mine eyes? What shield have I, when thou dost speak my name? My reason, like a banner, stoops and flies; My caution turns to incense in thy flame.',
+            'Yet call not this poor yielding mere defeat: In losing self, I found a vaster whole; Thy hand did make my mortal pulse complete, And wrote eternity upon my soul.',
+            'For if thou smile, the iron world grows kind; If thou but sigh, the noon itself grows wan; Thy joy is weather to my inward mind, Thy grief a bell that tolls through every dawn.',
+            'Come then, my heart\'s true sovereign, fierce and fair, Let years conspire and winter pale thy bloom; Time may lay silver in thy midnight hair, Yet shall my faith outstare the teeth of doom.',
+            'Let tempests preach, let envious tongues deride, Let fortune shift her colors, false and wild— I\'ll keep thee as the ocean keeps the tide, With ancient strength and wonder reconciled.',
+            'So, while this breath can lift one faithful word, And while this hand can seek and answer thine, Love shall not be a rumor merely heard, But bread, and fire, and sacrament, and sign.',
+        ],
+    },
+    {
         slug: 'life-with-hands-still-wet-from-dawn',
         title: 'Life, with its hands still wet from dawn',
         date: 'May 28, 2026',
