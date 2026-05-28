@@ -66,24 +66,24 @@ export default function LeftPanel() {
     <aside className="w-full md:w-[280px] md:shrink-0 md:sticky md:top-16 md:self-start">
 
       {/* Name */}
-      <div className="mb-7">
-        <h1 className="mt-1 font-black leading-[0.88] tracking-[-0.04em] text-stone-700" aria-label={profile.name}>
+      <div className="identity-card mb-7">
+        <h1 className="identity-heading mt-1 font-black leading-[0.88] tracking-[-0.04em] text-stone-700" aria-label={profile.name}>
           <span className="block font-mono text-[0.84rem] md:text-[0.92rem] uppercase tracking-[0.2em] text-stone-500">
             i am
           </span>
 
-          <span className="relative block text-[3.5rem] md:text-[3.9rem]">
-            <span aria-hidden="true" className="pointer-events-none absolute left-[2px] top-[2px] text-stone-400/60 select-none">
-              ronney
-            </span>
-            <span className="relative">ronney</span>
+          <span
+            className="identity-glitch-text block text-[3.5rem] md:text-[3.9rem]"
+            data-text="ronney"
+          >
+            ronney
           </span>
 
-          <span className="relative block text-[3.5rem] md:text-[3.9rem]">
-            <span aria-hidden="true" className="pointer-events-none absolute left-[2px] top-[2px] text-stone-400/60 select-none">
-              otieno.
-            </span>
-            <span className="relative">otieno</span><span className="relative text-stone-500">.</span>
+          <span
+            className="identity-glitch-text block text-[3.5rem] md:text-[3.9rem]"
+            data-text="otieno."
+          >
+            otieno<span className="relative text-stone-500">.</span>
           </span>
         </h1>
 
