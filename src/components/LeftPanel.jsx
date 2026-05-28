@@ -146,6 +146,10 @@ export default function LeftPanel() {
       </a>
 
       <section className="mt-2 mb-5 rounded-xl border border-stone-200 bg-white p-3">
+        <span className="hidden" data-ctf-flag={ctfFlag} aria-hidden="true">
+          {ctfFlag}
+        </span>
+
         <div className="flex items-center justify-between gap-2">
           {/* <p className="text-[0.63rem] font-mono uppercase tracking-[0.16em] text-stone-500">
             CTF // Mini Challenge
