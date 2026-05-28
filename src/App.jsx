@@ -1,5 +1,5 @@
-import { Suspense, lazy, useEffect } from 'react'
-import { Navigate, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react'
+import { Navigate, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import LeftPanel from './components/LeftPanel'
 import Work from './components/sections/Work'
 import NotFound from './components/sections/NotFound'
@@ -28,6 +28,16 @@ const LABEL_BY_PATH = {
 
 export default function App() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const [showReconBanner, setShowReconBanner] = useState(true)
+  const [terminalUnlocked, setTerminalUnlocked] = useState(false)
+  const [commandInput, setCommandInput] = useState('')
+  const [commandOutput, setCommandOutput] = useState('Type help for available commands.')
+
+  const linkedInUrl = useMemo(
+    () => profile.socials.find(({ label }) => label === 'LinkedIn')?.href,
+    []
+  )
 
   useEffect(() => {
     const label = LABEL_BY_PATH[pathname] ?? ''
@@ -36,11 +46,105 @@ export default function App() {
       : 'i am ronney — 404 Not Found'
   }, [pathname])
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setShowReconBanner(false)
+    }, 1200)
+
+    return () => {
+      window.clearTimeout(timer)
+    }
+  }, [])
+
+  useEffect(() => {
+    function syncUnlockState() {
+      setTerminalUnlocked(window.localStorage.getItem('iamronney_ctf_solved') === 'true')
+    }
+
+    syncUnlockState()
+    window.addEventListener('storage', syncUnlockState)
+    window.addEventListener('iamronney:ctf-solved', syncUnlockState)
+
+    return () => {
+      window.removeEventListener('storage', syncUnlockState)
+      window.removeEventListener('iamronney:ctf-solved', syncUnlockState)
+    }
+  }, [])
+
+  function runCommand(event) {
+    event.preventDefault()
+
+    const command = commandInput.trim().toLowerCase()
+    if (!command) {
+      return
+    }
+
+    const routeCommands = {
+      whoami: '/about',
+      about: '/about',
+      skills: '/achievements',
+      awards: '/achievements',
+      achievements: '/achievements',
+      work: '/work',
+      conferences: '/conferences',
+      posts: '/posts',
+      blog: '/posts',
+      home: '/work',
+    }
+
+    if (command === 'help') {
+      setCommandOutput('whoami | about | work | skills | awards | conferences | posts | contact | resume')
+      setCommandInput('')
+      return
+    }
+
+    if (routeCommands[command]) {
+      const targetRoute = routeCommands[command]
+      navigate(targetRoute)
+      setCommandOutput(`Routing to ${targetRoute}`)
+      setCommandInput('')
+      return
+    }
+
+    if (command === 'contact') {
+      window.location.href = `mailto:${profile.email}`
+      setCommandOutput('Launching mail client...')
+      setCommandInput('')
+      return
+    }
+
+    if (command === 'resume') {
+      if (linkedInUrl) {
+        window.open(linkedInUrl, '_blank', 'noopener,noreferrer')
+        setCommandOutput('Opening resume profile...')
+      } else {
+        setCommandOutput('Resume target not configured.')
+      }
+      setCommandInput('')
+      return
+    }
+
+    setCommandOutput(`Command not found: ${command}`)
+    setCommandInput('')
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
 
-      {/* ── Top rule — full viewport width ── */}
-      <div className="w-full border-t border-stone-200" />
+      <div
+        aria-live="polite"
+        className={[
+          'mx-auto mt-6 mb-2 w-full max-w-[900px] px-5 md:px-8 transition-opacity duration-300',
+          showReconBanner ? 'opacity-100' : 'opacity-0 pointer-events-none h-0 overflow-hidden m-0 p-0',
+        ].join(' ')}
+      >
+        <div className="rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 font-mono text-[0.68rem] tracking-[0.08em] text-stone-600">
+          <p>[+] Enumerating surface...</p>
+          <p className="mt-1">[+] Loading profile vectors...</p>
+        </div>
+      </div>
+
+      <div className={['flex min-h-screen flex-col transition-opacity duration-500', showReconBanner ? 'opacity-0' : 'opacity-100'].join(' ')}>
 
       {/* ── Main content: centered horizontally + vertically ── */}
       <div className="flex-1 flex items-center w-full">
@@ -52,7 +156,7 @@ export default function App() {
             <LeftPanel />
 
             {/* Mobile navigation under left panel */}
-            <div className="mt-6 md:hidden w-full">
+            <div className={['mt-6 md:hidden w-full', terminalUnlocked ? 'hidden' : 'block'].join(' ')}>
               <details className="group rounded-xl border border-stone-200 bg-white p-2">
                 <summary className="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-[0.78rem] font-semibold text-stone-700 marker:content-none">
                   <span>Menu</span>
@@ -84,10 +188,52 @@ export default function App() {
           {/* Right — scrolls with page */}
           <main className="order-2 md:order-2 w-full flex-1 min-w-0">
 
+            {terminalUnlocked ? (
+              <section className="mb-5 rounded-xl border border-stone-200 bg-stone-50 p-2.5 md:p-3">
+                <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-stone-500">
+                  Terminal Mode
+                </p>
+
+                <>
+                  <form onSubmit={runCommand} className="mt-2">
+                    <label htmlFor="command-palette" className="sr-only">
+                      Terminal command input
+                    </label>
+                    <div className="flex items-center gap-2 rounded-lg border border-stone-200 bg-white px-2.5 py-2">
+                      <span className="font-mono text-[0.72rem] text-stone-500">$</span>
+                      <input
+                        id="command-palette"
+                        type="text"
+                        value={commandInput}
+                        onChange={(event) => setCommandInput(event.target.value)}
+                        placeholder="whoami"
+                        className="w-full bg-transparent text-[0.78rem] text-stone-800 placeholder:text-stone-400 focus:outline-none"
+                        spellCheck="false"
+                        autoComplete="off"
+                      />
+                      <button
+                        type="submit"
+                        className="rounded-md border border-stone-300 bg-stone-100 px-2 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.08em] text-stone-700 hover:bg-stone-200"
+                      >
+                        Run
+                      </button>
+                    </div>
+                  </form>
+
+                  <p className="mt-2 font-mono text-[0.66rem] text-stone-600">
+                    &gt; {commandOutput}
+                  </p>
+                </>
+              </section>
+            ) : null}
+
             {/* Navigation */}
             <nav
               aria-label="Portfolio sections"
-              className="hidden md:flex md:flex-wrap items-center gap-y-[5px] border-b border-stone-200 pb-4 mb-10 text-[0.8rem]"
+              className={[
+                'hidden md:flex md:flex-wrap items-center gap-y-[5px] border-b border-stone-200 pb-4 mb-10 text-[0.8rem]',
+                terminalUnlocked ? 'md:hidden' : '',
+              ].join(' ')}
             >
 
               {navItems.map(({ id, label }, idx) => (
@@ -159,6 +305,8 @@ export default function App() {
           </p>
         </div>
       </footer>
+
+      </div>
 
     </div>
   )
