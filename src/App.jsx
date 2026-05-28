@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useMemo, useState } from 'react'
+import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react'
 import { Navigate, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import LeftPanel from './components/LeftPanel'
 import Work from './components/sections/Work'
@@ -70,6 +70,33 @@ const RECON_EDGES = [
   ['/conferences', '/posts'],
 ]
 
+const MAX_INCIDENTS = 30
+const THEME_OPTIONS = ['system', 'light', 'poetic', 'void']
+
+function normalizeTheme(value) {
+  if (value === 'dark') {
+    return 'poetic'
+  }
+
+  return THEME_OPTIONS.includes(value) ? value : null
+}
+
+function resolveTheme(preference, systemPrefersDark) {
+  if (preference === 'light') {
+    return 'light'
+  }
+
+  if (preference === 'poetic') {
+    return 'poetic'
+  }
+
+  if (preference === 'void') {
+    return 'void'
+  }
+
+  return systemPrefersDark ? 'poetic' : 'light'
+}
+
 const TERMINAL_COMMANDS = [
   'help',
   'whoami',
@@ -86,6 +113,7 @@ const TERMINAL_COMMANDS = [
   'resume',
   'scan',
   'artifacts',
+  'incidents',
   'clear',
   ...Object.keys(EASTER_EGGS),
 ]
@@ -108,12 +136,29 @@ function sharedPrefix(words) {
 export default function App() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const previousPathRef = useRef(pathname)
+  const previousUnlockRef = useRef(false)
   const [showReconBanner, setShowReconBanner] = useState(true)
+  const [themePreference, setThemePreference] = useState('light')
+  const [theme, setTheme] = useState('light')
   const [terminalUnlocked, setTerminalUnlocked] = useState(false)
   const [commandInput, setCommandInput] = useState('')
   const [commandOutput, setCommandOutput] = useState('Type help for available commands.')
   const [commandHistory, setCommandHistory] = useState([])
   const [historyIndex, setHistoryIndex] = useState(-1)
+  const [showIncidentLog, setShowIncidentLog] = useState(false)
+  const [incidentLogs, setIncidentLogs] = useState(() => {
+    const timestamp = new Date().toISOString()
+    return [
+      {
+        id: `incident-${timestamp}`,
+        code: 'INIT',
+        detail: 'Session initialized. Analyst console online.',
+        level: 'info',
+        timestamp,
+      },
+    ]
+  })
   const [discoveredRoutes, setDiscoveredRoutes] = useState(() => {
     const stored = window.localStorage.getItem('iamronney_discovered_routes')
     if (!stored) {
@@ -153,6 +198,21 @@ export default function App() {
 
   const totalArtifactCount = routeArtifactCount + easterArtifactCount
 
+  function appendIncident(code, detail, level = 'info') {
+    const timestamp = new Date().toISOString()
+
+    setIncidentLogs((prev) => [
+      {
+        id: `incident-${timestamp}-${Math.random().toString(36).slice(2, 8)}`,
+        code,
+        detail,
+        level,
+        timestamp,
+      },
+      ...prev,
+    ].slice(0, MAX_INCIDENTS))
+  }
+
   const linkedInUrl = useMemo(
     () => profile.socials.find(({ label }) => label === 'LinkedIn')?.href,
     []
@@ -175,6 +235,45 @@ export default function App() {
 
     return !(commandMatches.length === 1 && commandMatches[0] === normalizedInput)
   }, [commandInput, commandMatches])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const storedTheme = normalizeTheme(window.localStorage.getItem('iamronney_theme'))
+
+    if (storedTheme) {
+      setThemePreference(storedTheme)
+      window.localStorage.setItem('iamronney_theme', storedTheme)
+    } else {
+      setThemePreference('light')
+    }
+
+    function handleSystemThemeChange(event) {
+      if (themePreference !== 'system') {
+        return
+      }
+
+      setTheme(resolveTheme('system', event.matches))
+    }
+
+    mediaQuery.addEventListener('change', handleSystemThemeChange)
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleSystemThemeChange)
+    }
+  }, [themePreference])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const resolvedTheme = resolveTheme(themePreference, mediaQuery.matches)
+    setTheme(resolvedTheme)
+    document.documentElement.setAttribute('data-theme', resolvedTheme)
+  }, [themePreference])
+
+  function handleThemeChange(event) {
+    const nextPreference = event.target.value
+    setThemePreference(nextPreference)
+    window.localStorage.setItem('iamronney_theme', nextPreference)
+  }
 
   useEffect(() => {
     const label = LABEL_BY_PATH[pathname] ?? ''
@@ -207,6 +306,24 @@ export default function App() {
       window.removeEventListener('iamronney:ctf-solved', syncUnlockState)
     }
   }, [])
+
+  useEffect(() => {
+    const previousPath = previousPathRef.current
+    if (previousPath !== pathname && LABEL_BY_PATH[pathname]) {
+      appendIncident('ROUTE', `${previousPath} -> ${pathname}`, 'info')
+    }
+
+    previousPathRef.current = pathname
+  }, [pathname])
+
+  useEffect(() => {
+    const wasUnlocked = previousUnlockRef.current
+    if (!wasUnlocked && terminalUnlocked) {
+      appendIncident('CTF', 'Mini challenge solved. Terminal mode unlocked.', 'success')
+    }
+
+    previousUnlockRef.current = terminalUnlocked
+  }, [terminalUnlocked])
 
   useEffect(() => {
     if (!LABEL_BY_PATH[pathname]) {
@@ -257,6 +374,7 @@ export default function App() {
 
     setCommandHistory((prev) => [...prev, command])
     setHistoryIndex(-1)
+    appendIncident('CMD', `issued: ${command}`, 'info')
 
     const routeCommands = {
       whoami: '/about',
@@ -272,7 +390,7 @@ export default function App() {
     }
 
     if (command === 'help') {
-      setCommandOutput('whoami | about | work | skills | awards | conferences | posts | contact | resume | scan | artifacts | clear | dream | trace | entropy | ghost')
+      setCommandOutput('whoami | about | work | skills | awards | conferences | posts | contact | resume | scan | artifacts | incidents | clear | dream | trace | entropy | ghost')
       setCommandInput('')
       return
     }
@@ -304,8 +422,18 @@ export default function App() {
       return
     }
 
+    if (command === 'incidents') {
+      setShowIncidentLog(true)
+      setCommandOutput(`Incident log opened (${incidentLogs.length} entries retained).`)
+      appendIncident('CMD', 'incident log panel opened.', 'success')
+      setCommandInput('')
+      return
+    }
+
     if (command === 'clear') {
       setCommandOutput('')
+      setShowIncidentLog(false)
+      appendIncident('CMD', 'terminal output and incident panel cleared.', 'info')
       setCommandInput('')
       return
     }
@@ -318,6 +446,7 @@ export default function App() {
         const nextArtifacts = [...artifacts, egg.artifact]
         setArtifacts(nextArtifacts)
         window.localStorage.setItem('iamronney_artifacts', JSON.stringify(nextArtifacts))
+        appendIncident('EGG', `${command} solved. Captured ${egg.artifact}.`, 'success')
       }
 
       setCommandOutput(
@@ -325,6 +454,11 @@ export default function App() {
           ? egg.text
           : `${egg.text} [artifact captured: ${egg.artifact}]`
       )
+
+      if (alreadyCollected) {
+        appendIncident('EGG', `${command} replayed.`, 'info')
+      }
+
       setCommandInput('')
       return
     }
@@ -333,6 +467,7 @@ export default function App() {
       const targetRoute = routeCommands[command]
       navigate(targetRoute)
       setCommandOutput(`Routing to ${targetRoute}`)
+      appendIncident('CMD', `navigated to ${targetRoute}.`, 'info')
       setCommandInput('')
       return
     }
@@ -340,6 +475,7 @@ export default function App() {
     if (command === 'contact') {
       window.location.href = `mailto:${profile.email}`
       setCommandOutput('Launching mail client...')
+      appendIncident('CMD', 'mail client launch triggered.', 'success')
       setCommandInput('')
       return
     }
@@ -348,14 +484,17 @@ export default function App() {
       if (linkedInUrl) {
         window.open(linkedInUrl, '_blank', 'noopener,noreferrer')
         setCommandOutput('Opening resume profile...')
+        appendIncident('CMD', 'resume profile opened in new tab.', 'success')
       } else {
         setCommandOutput('Resume target not configured.')
+        appendIncident('CMD', 'resume requested but no URL configured.', 'warn')
       }
       setCommandInput('')
       return
     }
 
     setCommandOutput(`Command not found: ${command}`)
+    appendIncident('CMD', `unknown command rejected (${command}).`, 'warn')
     setCommandInput('')
   }
 
@@ -437,13 +576,13 @@ export default function App() {
       <div className={['flex min-h-screen flex-col transition-opacity duration-500', showReconBanner ? 'opacity-0' : 'opacity-100'].join(' ')}>
 
       {/* ── Main content: centered horizontally + vertically ── */}
-      <div className="flex-1 flex items-center w-full">
+      <div className="flex-1 w-full">
         <div className="w-full max-w-[900px] mx-auto px-5 md:px-8 py-10 md:py-16">
-        <div className="flex flex-col md:flex-row gap-10 md:gap-20 items-start">
+        <div className="flex flex-col md:flex-row gap-10 md:gap-20 items-start md:items-stretch">
 
           {/* Left — sticky on scroll */}
-          <div className="order-1 md:order-1 w-full md:w-auto">
-            <LeftPanel />
+          <div className="order-1 md:order-1 w-full md:w-auto md:self-stretch">
+            <LeftPanel themePreference={themePreference} onThemeChange={handleThemeChange} />
 
             {/* Mobile navigation under left panel */}
             <div className={['mt-6 md:hidden w-full', terminalUnlocked ? 'hidden' : 'block'].join(' ')}>
@@ -546,6 +685,42 @@ export default function App() {
                       Route artifacts auto-capture on navigation. Easter egg artifacts unlock via terminal commands.
                     </p>
                   </div>
+
+                  {showIncidentLog ? (
+                    <div className="mt-3 rounded-lg border border-stone-200 bg-stone-50 px-2.5 py-2">
+                      <p className="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-stone-500">
+                        Incident Log // analyst console
+                      </p>
+
+                      <div className="mt-2 max-h-44 overflow-auto pr-1">
+                        {incidentLogs.map((entry) => (
+                          <div key={entry.id} className="grid grid-cols-[auto_auto_1fr] items-start gap-2 border-b border-stone-200/70 py-1.5 last:border-b-0">
+                            <span className="font-mono text-[0.58rem] text-stone-500">
+                              {new Date(entry.timestamp).toLocaleTimeString('en-GB', {
+                                hour12: false,
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                              })}
+                            </span>
+                            <span className={[
+                              'font-mono text-[0.56rem] uppercase tracking-[0.1em]',
+                              entry.level === 'success'
+                                ? 'text-emerald-700'
+                                : entry.level === 'warn'
+                                  ? 'text-amber-700'
+                                  : 'text-stone-500',
+                            ].join(' ')}>
+                              {entry.code}
+                            </span>
+                            <span className="font-mono text-[0.62rem] text-stone-700">
+                              {entry.detail}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
                 </>
               </section>
             ) : null}
