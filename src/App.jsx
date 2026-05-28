@@ -33,6 +33,8 @@ export default function App() {
   const [terminalUnlocked, setTerminalUnlocked] = useState(false)
   const [commandInput, setCommandInput] = useState('')
   const [commandOutput, setCommandOutput] = useState('Type help for available commands.')
+  const [commandHistory, setCommandHistory] = useState([])
+  const [historyIndex, setHistoryIndex] = useState(-1)
 
   const linkedInUrl = useMemo(
     () => profile.socials.find(({ label }) => label === 'LinkedIn')?.href,
@@ -74,10 +76,14 @@ export default function App() {
   function runCommand(event) {
     event.preventDefault()
 
-    const command = commandInput.trim().toLowerCase()
-    if (!command) {
+    const rawCommand = commandInput.trim()
+    const command = rawCommand.toLowerCase()
+    if (!rawCommand) {
       return
     }
+
+    setCommandHistory((prev) => [...prev, rawCommand])
+    setHistoryIndex(-1)
 
     const routeCommands = {
       whoami: '/about',
@@ -126,6 +132,39 @@ export default function App() {
 
     setCommandOutput(`Command not found: ${command}`)
     setCommandInput('')
+  }
+
+  function handleCommandInputKeyDown(event) {
+    if (event.key === 'ArrowUp') {
+      if (!commandHistory.length) {
+        return
+      }
+
+      event.preventDefault()
+      const nextIndex = historyIndex === -1
+        ? commandHistory.length - 1
+        : Math.max(0, historyIndex - 1)
+      setHistoryIndex(nextIndex)
+      setCommandInput(commandHistory[nextIndex])
+      return
+    }
+
+    if (event.key === 'ArrowDown') {
+      if (!commandHistory.length || historyIndex === -1) {
+        return
+      }
+
+      event.preventDefault()
+      const nextIndex = historyIndex + 1
+      if (nextIndex >= commandHistory.length) {
+        setHistoryIndex(-1)
+        setCommandInput('')
+        return
+      }
+
+      setHistoryIndex(nextIndex)
+      setCommandInput(commandHistory[nextIndex])
+    }
   }
 
   return (
@@ -205,12 +244,13 @@ export default function App() {
                       Terminal command input
                     </label>
                     <div className="flex items-center gap-2 rounded-lg border border-stone-200 bg-white px-2.5 py-2">
-                      <span className="font-mono text-[0.72rem] text-stone-500">$</span>
+                      <span className="font-mono text-[0.72rem] text-stone-500">$iamronney:</span>
                       <input
                         id="command-palette"
                         type="text"
                         value={commandInput}
                         onChange={(event) => setCommandInput(event.target.value)}
+                        onKeyDown={handleCommandInputKeyDown}
                         placeholder="whoami"
                         className="w-full bg-transparent text-[0.78rem] text-stone-800 placeholder:text-stone-400 focus:outline-none"
                         spellCheck="false"
