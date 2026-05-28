@@ -146,9 +146,6 @@ export default function App() {
 
       <div className={['flex min-h-screen flex-col transition-opacity duration-500', showReconBanner ? 'opacity-0' : 'opacity-100'].join(' ')}>
 
-      {/* ── Top rule — full viewport width ── */}
-      <div className="w-full border-t border-stone-200" />
-
       {/* ── Main content: centered horizontally + vertically ── */}
       <div className="flex-1 flex items-center w-full">
         <div className="w-full max-w-[900px] mx-auto px-5 md:px-8 py-10 md:py-16">
