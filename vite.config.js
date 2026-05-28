@@ -33,4 +33,9 @@ function redirectBaseWithoutTrailingSlash(base) {
 export default defineConfig({
     plugins: [react(), redirectBaseWithoutTrailingSlash('/iamronney/')],
     base: '/iamronney/',
+    test: {
+        globals: true,
+        environment: 'jsdom',
+        setupFiles: './src/test/setup.js',
+    },
 })
