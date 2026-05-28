@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      // Redirect unknown static paths to index.html while preserving SPA route info.
+      (function (location) {
+        var basePath = '/iamronney';
+        var routePath = location.pathname.indexOf(basePath) === 0
+          ? location.pathname.slice(basePath.length)
+          : location.pathname;
+
+        var redirectUrl =
+          location.protocol +
+          '//' +
+          location.hostname +
+          (location.port ? ':' + location.port : '') +
+          basePath +
+          '/?/' +
+          routePath.replace(/^\/+/, '').replace(/&/g, '~and~') +
+          (location.search ? '&' + location.search.slice(1).replace(/&/g, '~and~') : '') +
+          location.hash;
+
+        location.replace(redirectUrl);
+      })(window.location);
+    </script>
+  </head>
+  <body></body>
+</html>
