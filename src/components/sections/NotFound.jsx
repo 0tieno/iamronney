@@ -1,6 +1,6 @@
-export default function NotFound() {
-  const homeHref = `${import.meta.env.BASE_URL}#work`
+import { Link } from 'react-router-dom'
 
+export default function NotFound() {
   return (
     <section aria-labelledby="not-found-heading" className="animate-fade-slide-up">
       <p className="text-[0.72rem] font-semibold tracking-[0.22em] uppercase text-brand-green mb-3">
@@ -24,19 +24,19 @@ export default function NotFound() {
 {`$ curl -I ${window.location.href}
 HTTP/1.1 404 Not Found
 X-Trace-Id: nerd-mode-enabled
-Hint: try #work, #about, #conferences, #achievements, #posts`}
+Hint: try /work, /about, /conferences, /achievements, /posts`}
         </pre>
       </div>
 
-      <a
-        href={homeHref}
+      <Link
+        to="/work"
         className="inline-flex items-center gap-2 text-[0.86rem] font-semibold text-brand-blue hover:text-stone-900 hover:underline underline-offset-[3px]"
       >
         Reboot to home section
         <svg viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
           <path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z" />
         </svg>
-      </a>
+      </Link>
     </section>
   )
 }
