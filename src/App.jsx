@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import LeftPanel from './components/LeftPanel'
 import Work from './components/sections/Work'
-import About from './components/sections/About'
-import Conferences from './components/sections/Conferences'
-import Achievements from './components/sections/Achievements'
-import Posts from './components/sections/Posts'
 import NotFound from './components/sections/NotFound'
 import { navItems, profile } from './data/content'
+
+const About = lazy(() => import('./components/sections/About'))
+const Conferences = lazy(() => import('./components/sections/Conferences'))
+const Achievements = lazy(() => import('./components/sections/Achievements'))
+const Posts = lazy(() => import('./components/sections/Posts'))
 
 const SECTION_MAP = {
   work:         Work,
@@ -18,6 +19,7 @@ const SECTION_MAP = {
 }
 
 const VALID_IDS = Object.keys(SECTION_MAP)
+const NAV_LABEL_BY_ID = Object.fromEntries(navItems.map(({ id, label }) => [id, label]))
 
 function getBasePath() {
   const base = import.meta.env.BASE_URL || '/'
@@ -59,7 +61,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const label = navItems.find((n) => n.id === active)?.label ?? ''
+    const label = NAV_LABEL_BY_ID[active] ?? ''
     document.title = active === 'not-found'
       ? 'i am ronney — 404 Not Found'
       : `i am ronney${label ? ` — ${label}` : ''}`
@@ -114,8 +116,16 @@ export default function App() {
               ))}
             </nav>
 
-            {/* key forces remount → re-fires entry animation */}
-            <ActiveSection key={active} />
+            <Suspense
+              fallback={
+                <div className="py-8 text-[0.9rem] text-stone-500" role="status" aria-live="polite">
+                  Loading section...
+                </div>
+              }
+            >
+              {/* key forces remount → re-fires entry animation */}
+              <ActiveSection key={active} />
+            </Suspense>
 
           </main>
         </div>
