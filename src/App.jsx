@@ -1,4 +1,5 @@
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
+import { Navigate, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import LeftPanel from './components/LeftPanel'
 import Work from './components/sections/Work'
 import NotFound from './components/sections/NotFound'
@@ -9,69 +10,31 @@ const Conferences = lazy(() => import('./components/sections/Conferences'))
 const Achievements = lazy(() => import('./components/sections/Achievements'))
 const Posts = lazy(() => import('./components/sections/Posts'))
 
-const SECTION_MAP = {
-  work:         Work,
-  about:        About,
-  conferences:  Conferences,
-  achievements: Achievements,
-  posts:        Posts,
-  'not-found':  NotFound,
+const ROUTE_BY_ID = {
+  work: '/work',
+  about: '/about',
+  conferences: '/conferences',
+  achievements: '/achievements',
+  posts: '/posts',
 }
 
-const VALID_IDS = Object.keys(SECTION_MAP)
-const NAV_LABEL_BY_ID = Object.fromEntries(navItems.map(({ id, label }) => [id, label]))
-
-function getBasePath() {
-  const base = import.meta.env.BASE_URL || '/'
-  return base.endsWith('/') ? base.slice(0, -1) : base
-}
-
-function getInitialSection() {
-  const pathname = window.location.pathname.replace(/\/$/, '')
-  const basePath = getBasePath()
-
-  // Accept only the app root path so deep non-hash URLs render the local 404 view.
-  if (pathname !== basePath) {
-    return 'not-found'
-  }
-
-  const hash = window.location.hash.slice(1)
-  if (!hash) {
-    return 'work'
-  }
-
-  return VALID_IDS.includes(hash) ? hash : 'not-found'
+const LABEL_BY_PATH = {
+  '/work': navItems.find(({ id }) => id === 'work')?.label ?? 'My Work',
+  '/about': navItems.find(({ id }) => id === 'about')?.label ?? 'About',
+  '/conferences': navItems.find(({ id }) => id === 'conferences')?.label ?? 'Conferences',
+  '/achievements': navItems.find(({ id }) => id === 'achievements')?.label ?? 'Achievements',
+  '/posts': navItems.find(({ id }) => id === 'posts')?.label ?? 'Posts',
 }
 
 export default function App() {
-  const [active, setActive] = useState(getInitialSection)
+  const { pathname } = useLocation()
 
   useEffect(() => {
-    const syncFromUrl = () => {
-      setActive(getInitialSection())
-    }
-
-    window.addEventListener('hashchange', syncFromUrl)
-    window.addEventListener('popstate', syncFromUrl)
-
-    return () => {
-      window.removeEventListener('hashchange', syncFromUrl)
-      window.removeEventListener('popstate', syncFromUrl)
-    }
-  }, [])
-
-  useEffect(() => {
-    const label = NAV_LABEL_BY_ID[active] ?? ''
-    document.title = active === 'not-found'
-      ? 'i am ronney — 404 Not Found'
-      : `i am ronney${label ? ` — ${label}` : ''}`
-
-    if (active !== 'not-found') {
-      history.replaceState(null, '', `#${active}`)
-    }
-  }, [active])
-
-  const ActiveSection = SECTION_MAP[active]
+    const label = LABEL_BY_PATH[pathname] ?? ''
+    document.title = label
+      ? `i am ronney — ${label}`
+      : 'i am ronney — 404 Not Found'
+  }, [pathname])
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -97,14 +60,13 @@ export default function App() {
             >
 
               {navItems.map(({ id, label }, idx) => (
-                <button
+                <NavLink
                   key={id}
-                  type="button"
-                  onClick={() => setActive(id)}
-                  className={[
-                    'px-[0.5rem] leading-none bg-transparent border-0 cursor-pointer',
+                  to={ROUTE_BY_ID[id]}
+                  className={({ isActive }) => [
+                    'px-[0.5rem] leading-none bg-transparent border-0 cursor-pointer no-underline',
                     idx < navItems.length - 1 ? 'border-r border-stone-200' : '',
-                    active === id
+                    isActive
                       ? 'font-semibold text-stone-900 underline underline-offset-[3px]'
                       : 'text-brand-blue hover:text-stone-900 hover:underline hover:underline-offset-[3px]',
                   ]
@@ -112,7 +74,7 @@ export default function App() {
                     .join(' ')}
                 >
                   {label}
-                </button>
+                </NavLink>
               ))}
             </nav>
 
@@ -123,8 +85,15 @@ export default function App() {
                 </div>
               }
             >
-              {/* key forces remount → re-fires entry animation */}
-              <ActiveSection key={active} />
+              <Routes>
+                <Route path="/" element={<Navigate to="/work" replace />} />
+                <Route path="/work" element={<Work />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/conferences" element={<Conferences />} />
+                <Route path="/achievements" element={<Achievements />} />
+                <Route path="/posts" element={<Posts />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </Suspense>
 
           </main>
