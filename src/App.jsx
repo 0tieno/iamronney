@@ -26,6 +26,50 @@ const LABEL_BY_PATH = {
   '/posts': navItems.find(({ id }) => id === 'posts')?.label ?? 'Posts',
 }
 
+const ARTIFACT_BY_PATH = {
+  '/work': 'artifact.route.work',
+  '/about': 'artifact.route.about',
+  '/conferences': 'artifact.route.conferences',
+  '/achievements': 'artifact.route.achievements',
+  '/posts': 'artifact.route.posts',
+}
+
+const EASTER_EGGS = {
+  dream: {
+    text: 'dream.log: build beauty. break assumptions. leave useful traces.',
+    artifact: 'artifact.egg.dream',
+  },
+  trace: {
+    text: 'trace: vector walk complete // 5 trust boundaries mapped.',
+    artifact: 'artifact.egg.trace',
+  },
+  entropy: {
+    text: 'entropy: randomness accepted. discipline restored by design.',
+    artifact: 'artifact.egg.entropy',
+  },
+  ghost: {
+    text: 'ghost: no active operator found. only footprints remain.',
+    artifact: 'artifact.egg.ghost',
+  },
+}
+
+const RECON_NODES = [
+  { path: '/work', short: 'wrk', x: 14, y: 49 },
+  { path: '/about', short: 'abt', x: 52, y: 24 },
+  { path: '/conferences', short: 'cnf', x: 96, y: 16 },
+  { path: '/achievements', short: 'ach', x: 62, y: 73 },
+  { path: '/posts', short: 'pst', x: 108, y: 58 },
+]
+
+const RECON_EDGES = [
+  ['/work', '/about'],
+  ['/about', '/conferences'],
+  ['/about', '/achievements'],
+  ['/achievements', '/posts'],
+  ['/work', '/achievements'],
+  ['/conferences', '/posts'],
+]
+
 const TERMINAL_COMMANDS = [
   'help',
   'whoami',
@@ -40,6 +84,10 @@ const TERMINAL_COMMANDS = [
   'home',
   'contact',
   'resume',
+  'scan',
+  'artifacts',
+  'clear',
+  ...Object.keys(EASTER_EGGS),
 ]
 
 function sharedPrefix(words) {
@@ -66,6 +114,44 @@ export default function App() {
   const [commandOutput, setCommandOutput] = useState('Type help for available commands.')
   const [commandHistory, setCommandHistory] = useState([])
   const [historyIndex, setHistoryIndex] = useState(-1)
+  const [discoveredRoutes, setDiscoveredRoutes] = useState(() => {
+    const stored = window.localStorage.getItem('iamronney_discovered_routes')
+    if (!stored) {
+      return []
+    }
+
+    try {
+      const parsed = JSON.parse(stored)
+      return Array.isArray(parsed) ? parsed : []
+    } catch {
+      return []
+    }
+  })
+  const [artifacts, setArtifacts] = useState(() => {
+    const stored = window.localStorage.getItem('iamronney_artifacts')
+    if (!stored) {
+      return []
+    }
+
+    try {
+      const parsed = JSON.parse(stored)
+      return Array.isArray(parsed) ? parsed : []
+    } catch {
+      return []
+    }
+  })
+
+  const routeArtifactCount = useMemo(
+    () => Object.values(ARTIFACT_BY_PATH).length,
+    []
+  )
+
+  const easterArtifactCount = useMemo(
+    () => Object.values(EASTER_EGGS).filter(({ artifact }) => artifact).length,
+    []
+  )
+
+  const totalArtifactCount = routeArtifactCount + easterArtifactCount
 
   const linkedInUrl = useMemo(
     () => profile.socials.find(({ label }) => label === 'LinkedIn')?.href,
@@ -122,6 +208,37 @@ export default function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!LABEL_BY_PATH[pathname]) {
+      return
+    }
+
+    setDiscoveredRoutes((prev) => {
+      if (prev.includes(pathname)) {
+        return prev
+      }
+
+      const next = [...prev, pathname]
+      window.localStorage.setItem('iamronney_discovered_routes', JSON.stringify(next))
+      return next
+    })
+
+    const routeArtifact = ARTIFACT_BY_PATH[pathname]
+    if (!routeArtifact) {
+      return
+    }
+
+    setArtifacts((prev) => {
+      if (prev.includes(routeArtifact)) {
+        return prev
+      }
+
+      const next = [...prev, routeArtifact]
+      window.localStorage.setItem('iamronney_artifacts', JSON.stringify(next))
+      return next
+    })
+  }, [pathname])
+
   function runCommand(event) {
     event.preventDefault()
 
@@ -155,7 +272,59 @@ export default function App() {
     }
 
     if (command === 'help') {
-      setCommandOutput('whoami | about | work | skills | awards | conferences | posts | contact | resume')
+      setCommandOutput('whoami | about | work | skills | awards | conferences | posts | contact | resume | scan | artifacts | clear | dream | trace | entropy | ghost')
+      setCommandInput('')
+      return
+    }
+
+    if (command === 'scan') {
+      const routeLabels = discoveredRoutes
+        .map((routePath) => LABEL_BY_PATH[routePath])
+        .filter(Boolean)
+
+      if (routeLabels.length) {
+        setCommandOutput(`Recon map: ${routeLabels.join(' | ')}`)
+      } else {
+        setCommandOutput('Recon map: no route signatures discovered yet.')
+      }
+
+      setCommandInput('')
+      return
+    }
+
+    if (command === 'artifacts') {
+      if (!artifacts.length) {
+        setCommandOutput(`Artifacts [0/${totalArtifactCount}]: none captured.`)
+      } else {
+        const sortedArtifacts = [...artifacts].sort()
+        setCommandOutput(`Artifacts [${sortedArtifacts.length}/${totalArtifactCount}]: ${sortedArtifacts.join(' | ')}`)
+      }
+
+      setCommandInput('')
+      return
+    }
+
+    if (command === 'clear') {
+      setCommandOutput('')
+      setCommandInput('')
+      return
+    }
+
+    if (EASTER_EGGS[command]) {
+      const egg = EASTER_EGGS[command]
+      const alreadyCollected = artifacts.includes(egg.artifact)
+
+      if (!alreadyCollected) {
+        const nextArtifacts = [...artifacts, egg.artifact]
+        setArtifacts(nextArtifacts)
+        window.localStorage.setItem('iamronney_artifacts', JSON.stringify(nextArtifacts))
+      }
+
+      setCommandOutput(
+        alreadyCollected
+          ? egg.text
+          : `${egg.text} [artifact captured: ${egg.artifact}]`
+      )
       setCommandInput('')
       return
     }
@@ -368,6 +537,15 @@ export default function App() {
                   <p className="mt-2 font-mono text-[0.66rem] text-stone-600">
                     &gt; {commandOutput}
                   </p>
+
+                  <div className="mt-3 rounded-lg border border-stone-200 bg-stone-50 px-2.5 py-2">
+                    <p className="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-stone-500">
+                      Artifact Collection // {artifacts.length}/{totalArtifactCount}
+                    </p>
+                    <p className="mt-1 text-[0.66rem] text-stone-600">
+                      Route artifacts auto-capture on navigation. Easter egg artifacts unlock via terminal commands.
+                    </p>
+                  </div>
                 </>
               </section>
             ) : null}
@@ -450,6 +628,49 @@ export default function App() {
           </p>
         </div>
       </footer>
+
+      <aside className="recon-minimap hidden md:block" aria-label="Recon route map">
+        <p className="recon-minimap-label">Recon Map</p>
+        <svg viewBox="0 0 122 86" role="img" aria-label="Discovered route graph" className="recon-minimap-svg">
+          {RECON_EDGES.map(([from, to]) => {
+            const fromNode = RECON_NODES.find(({ path }) => path === from)
+            const toNode = RECON_NODES.find(({ path }) => path === to)
+            if (!fromNode || !toNode) {
+              return null
+            }
+
+            const edgeActive = discoveredRoutes.includes(from) && discoveredRoutes.includes(to)
+
+            return (
+              <line
+                key={`${from}-${to}`}
+                x1={fromNode.x}
+                y1={fromNode.y}
+                x2={toNode.x}
+                y2={toNode.y}
+                className={edgeActive ? 'recon-edge recon-edge-active' : 'recon-edge'}
+              />
+            )
+          })}
+
+          {RECON_NODES.map((node) => {
+            const isCurrent = node.path === pathname
+            const isDiscovered = discoveredRoutes.includes(node.path)
+            const nodeClass = isCurrent
+              ? 'recon-node recon-node-current'
+              : isDiscovered
+                ? 'recon-node recon-node-discovered'
+                : 'recon-node'
+
+            return (
+              <g key={node.path} transform={`translate(${node.x}, ${node.y})`}>
+                <circle r="4" className={nodeClass} />
+                <text x="6" y="3" className="recon-node-label">{node.short}</text>
+              </g>
+            )
+          })}
+        </svg>
+      </aside>
 
       </div>
 
