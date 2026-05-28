@@ -26,6 +26,85 @@ const LABEL_BY_PATH = {
   '/posts': navItems.find(({ id }) => id === 'posts')?.label ?? 'Posts',
 }
 
+const ARTIFACT_BY_PATH = {
+  '/work': 'artifact.route.work',
+  '/about': 'artifact.route.about',
+  '/conferences': 'artifact.route.conferences',
+  '/achievements': 'artifact.route.achievements',
+  '/posts': 'artifact.route.posts',
+}
+
+const EASTER_EGGS = {
+  dream: {
+    text: 'dream.log: build beauty. break assumptions. leave useful traces.',
+    artifact: 'artifact.egg.dream',
+  },
+  trace: {
+    text: 'trace: vector walk complete // 5 trust boundaries mapped.',
+    artifact: 'artifact.egg.trace',
+  },
+  entropy: {
+    text: 'entropy: randomness accepted. discipline restored by design.',
+    artifact: 'artifact.egg.entropy',
+  },
+  ghost: {
+    text: 'ghost: no active operator found. only footprints remain.',
+    artifact: 'artifact.egg.ghost',
+  },
+}
+
+const RECON_NODES = [
+  { path: '/work', short: 'wrk', x: 14, y: 49 },
+  { path: '/about', short: 'abt', x: 52, y: 24 },
+  { path: '/conferences', short: 'cnf', x: 96, y: 16 },
+  { path: '/achievements', short: 'ach', x: 62, y: 73 },
+  { path: '/posts', short: 'pst', x: 108, y: 58 },
+]
+
+const RECON_EDGES = [
+  ['/work', '/about'],
+  ['/about', '/conferences'],
+  ['/about', '/achievements'],
+  ['/achievements', '/posts'],
+  ['/work', '/achievements'],
+  ['/conferences', '/posts'],
+]
+
+const TERMINAL_COMMANDS = [
+  'help',
+  'whoami',
+  'about',
+  'work',
+  'skills',
+  'awards',
+  'achievements',
+  'conferences',
+  'posts',
+  'blog',
+  'home',
+  'contact',
+  'resume',
+  'scan',
+  'artifacts',
+  'clear',
+  ...Object.keys(EASTER_EGGS),
+]
+
+function sharedPrefix(words) {
+  if (!words.length) {
+    return ''
+  }
+
+  return words.reduce((prefix, word) => {
+    let idx = 0
+    while (idx < prefix.length && idx < word.length && prefix[idx] === word[idx]) {
+      idx += 1
+    }
+
+    return prefix.slice(0, idx)
+  })
+}
+
 export default function App() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -33,11 +112,69 @@ export default function App() {
   const [terminalUnlocked, setTerminalUnlocked] = useState(false)
   const [commandInput, setCommandInput] = useState('')
   const [commandOutput, setCommandOutput] = useState('Type help for available commands.')
+  const [commandHistory, setCommandHistory] = useState([])
+  const [historyIndex, setHistoryIndex] = useState(-1)
+  const [discoveredRoutes, setDiscoveredRoutes] = useState(() => {
+    const stored = window.localStorage.getItem('iamronney_discovered_routes')
+    if (!stored) {
+      return []
+    }
+
+    try {
+      const parsed = JSON.parse(stored)
+      return Array.isArray(parsed) ? parsed : []
+    } catch {
+      return []
+    }
+  })
+  const [artifacts, setArtifacts] = useState(() => {
+    const stored = window.localStorage.getItem('iamronney_artifacts')
+    if (!stored) {
+      return []
+    }
+
+    try {
+      const parsed = JSON.parse(stored)
+      return Array.isArray(parsed) ? parsed : []
+    } catch {
+      return []
+    }
+  })
+
+  const routeArtifactCount = useMemo(
+    () => Object.values(ARTIFACT_BY_PATH).length,
+    []
+  )
+
+  const easterArtifactCount = useMemo(
+    () => Object.values(EASTER_EGGS).filter(({ artifact }) => artifact).length,
+    []
+  )
+
+  const totalArtifactCount = routeArtifactCount + easterArtifactCount
 
   const linkedInUrl = useMemo(
     () => profile.socials.find(({ label }) => label === 'LinkedIn')?.href,
     []
   )
+
+  const commandMatches = useMemo(() => {
+    const normalizedInput = commandInput.trim().toLowerCase()
+    if (!normalizedInput) {
+      return []
+    }
+
+    return TERMINAL_COMMANDS.filter((command) => command.startsWith(normalizedInput))
+  }, [commandInput])
+
+  const showCommandSuggestions = useMemo(() => {
+    const normalizedInput = commandInput.trim().toLowerCase()
+    if (!normalizedInput || !commandMatches.length) {
+      return false
+    }
+
+    return !(commandMatches.length === 1 && commandMatches[0] === normalizedInput)
+  }, [commandInput, commandMatches])
 
   useEffect(() => {
     const label = LABEL_BY_PATH[pathname] ?? ''
@@ -71,13 +208,55 @@ export default function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!LABEL_BY_PATH[pathname]) {
+      return
+    }
+
+    setDiscoveredRoutes((prev) => {
+      if (prev.includes(pathname)) {
+        return prev
+      }
+
+      const next = [...prev, pathname]
+      window.localStorage.setItem('iamronney_discovered_routes', JSON.stringify(next))
+      return next
+    })
+
+    const routeArtifact = ARTIFACT_BY_PATH[pathname]
+    if (!routeArtifact) {
+      return
+    }
+
+    setArtifacts((prev) => {
+      if (prev.includes(routeArtifact)) {
+        return prev
+      }
+
+      const next = [...prev, routeArtifact]
+      window.localStorage.setItem('iamronney_artifacts', JSON.stringify(next))
+      return next
+    })
+  }, [pathname])
+
   function runCommand(event) {
     event.preventDefault()
 
-    const command = commandInput.trim().toLowerCase()
-    if (!command) {
+    const rawCommand = commandInput.trim()
+    const normalizedCommand = rawCommand.toLowerCase()
+    const hasExactMatch = TERMINAL_COMMANDS.includes(normalizedCommand)
+    const resolvedCommand = !hasExactMatch && commandMatches.length
+      ? commandMatches[0]
+      : normalizedCommand
+
+    const command = resolvedCommand
+
+    if (!rawCommand) {
       return
     }
+
+    setCommandHistory((prev) => [...prev, command])
+    setHistoryIndex(-1)
 
     const routeCommands = {
       whoami: '/about',
@@ -93,7 +272,59 @@ export default function App() {
     }
 
     if (command === 'help') {
-      setCommandOutput('whoami | about | work | skills | awards | conferences | posts | contact | resume')
+      setCommandOutput('whoami | about | work | skills | awards | conferences | posts | contact | resume | scan | artifacts | clear | dream | trace | entropy | ghost')
+      setCommandInput('')
+      return
+    }
+
+    if (command === 'scan') {
+      const routeLabels = discoveredRoutes
+        .map((routePath) => LABEL_BY_PATH[routePath])
+        .filter(Boolean)
+
+      if (routeLabels.length) {
+        setCommandOutput(`Recon map: ${routeLabels.join(' | ')}`)
+      } else {
+        setCommandOutput('Recon map: no route signatures discovered yet.')
+      }
+
+      setCommandInput('')
+      return
+    }
+
+    if (command === 'artifacts') {
+      if (!artifacts.length) {
+        setCommandOutput(`Artifacts [0/${totalArtifactCount}]: none captured.`)
+      } else {
+        const sortedArtifacts = [...artifacts].sort()
+        setCommandOutput(`Artifacts [${sortedArtifacts.length}/${totalArtifactCount}]: ${sortedArtifacts.join(' | ')}`)
+      }
+
+      setCommandInput('')
+      return
+    }
+
+    if (command === 'clear') {
+      setCommandOutput('')
+      setCommandInput('')
+      return
+    }
+
+    if (EASTER_EGGS[command]) {
+      const egg = EASTER_EGGS[command]
+      const alreadyCollected = artifacts.includes(egg.artifact)
+
+      if (!alreadyCollected) {
+        const nextArtifacts = [...artifacts, egg.artifact]
+        setArtifacts(nextArtifacts)
+        window.localStorage.setItem('iamronney_artifacts', JSON.stringify(nextArtifacts))
+      }
+
+      setCommandOutput(
+        alreadyCollected
+          ? egg.text
+          : `${egg.text} [artifact captured: ${egg.artifact}]`
+      )
       setCommandInput('')
       return
     }
@@ -126,6 +357,65 @@ export default function App() {
 
     setCommandOutput(`Command not found: ${command}`)
     setCommandInput('')
+  }
+
+  function handleCommandInputKeyDown(event) {
+    if (event.key === 'Tab') {
+      const normalizedInput = commandInput.trim().toLowerCase()
+      if (!normalizedInput) {
+        return
+      }
+
+      event.preventDefault()
+      if (!commandMatches.length) {
+        return
+      }
+
+      if (commandMatches.length === 1) {
+        setCommandInput(commandMatches[0])
+        return
+      }
+
+      const prefix = sharedPrefix(commandMatches)
+      if (prefix.length > normalizedInput.length) {
+        setCommandInput(prefix)
+        return
+      }
+
+      setCommandOutput(`Matches: ${commandMatches.slice(0, 6).join(', ')}`)
+      return
+    }
+
+    if (event.key === 'ArrowUp') {
+      if (!commandHistory.length) {
+        return
+      }
+
+      event.preventDefault()
+      const nextIndex = historyIndex === -1
+        ? commandHistory.length - 1
+        : Math.max(0, historyIndex - 1)
+      setHistoryIndex(nextIndex)
+      setCommandInput(commandHistory[nextIndex])
+      return
+    }
+
+    if (event.key === 'ArrowDown') {
+      if (!commandHistory.length || historyIndex === -1) {
+        return
+      }
+
+      event.preventDefault()
+      const nextIndex = historyIndex + 1
+      if (nextIndex >= commandHistory.length) {
+        setHistoryIndex(-1)
+        setCommandInput('')
+        return
+      }
+
+      setHistoryIndex(nextIndex)
+      setCommandInput(commandHistory[nextIndex])
+    }
   }
 
   return (
@@ -186,12 +476,17 @@ export default function App() {
           </div>
 
           {/* Right — scrolls with page */}
-          <main className="order-2 md:order-2 w-full flex-1 min-w-0">
+          <main
+            className={[
+              'order-2 md:order-2 w-full flex-1 min-w-0',
+              terminalUnlocked ? 'p-0' : '',
+            ].join(' ')}
+          >
 
             {terminalUnlocked ? (
-              <section className="mb-5 rounded-xl border border-stone-200 bg-stone-50 p-2.5 md:p-3">
+              <section className="mb-4 pb-3">
                 <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-stone-500">
-                  Terminal Mode
+                  Terminal Mode // {pathname}
                 </p>
 
                 <>
@@ -200,12 +495,16 @@ export default function App() {
                       Terminal command input
                     </label>
                     <div className="flex items-center gap-2 rounded-lg border border-stone-200 bg-white px-2.5 py-2">
-                      <span className="font-mono text-[0.72rem] text-stone-500">$</span>
+                      <span className="font-mono text-[0.72rem] text-stone-500">$iamronney:</span>
                       <input
                         id="command-palette"
                         type="text"
                         value={commandInput}
-                        onChange={(event) => setCommandInput(event.target.value)}
+                        onChange={(event) => {
+                          setCommandInput(event.target.value)
+                          setHistoryIndex(-1)
+                        }}
+                        onKeyDown={handleCommandInputKeyDown}
                         placeholder="whoami"
                         className="w-full bg-transparent text-[0.78rem] text-stone-800 placeholder:text-stone-400 focus:outline-none"
                         spellCheck="false"
@@ -220,9 +519,33 @@ export default function App() {
                     </div>
                   </form>
 
+                  {showCommandSuggestions ? (
+                    <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                      {commandMatches.slice(0, 6).map((suggestion) => (
+                        <button
+                          key={suggestion}
+                          type="button"
+                          onClick={() => setCommandInput(suggestion)}
+                          className="rounded-md border border-stone-300 bg-stone-100 px-2 py-0.5 font-mono text-[0.62rem] text-stone-700 hover:bg-stone-200"
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+
                   <p className="mt-2 font-mono text-[0.66rem] text-stone-600">
                     &gt; {commandOutput}
                   </p>
+
+                  <div className="mt-3 rounded-lg border border-stone-200 bg-stone-50 px-2.5 py-2">
+                    <p className="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-stone-500">
+                      Artifact Collection // {artifacts.length}/{totalArtifactCount}
+                    </p>
+                    <p className="mt-1 text-[0.66rem] text-stone-600">
+                      Route artifacts auto-capture on navigation. Easter egg artifacts unlock via terminal commands.
+                    </p>
+                  </div>
                 </>
               </section>
             ) : null}
@@ -257,12 +580,12 @@ export default function App() {
 
             <Suspense
               fallback={
-                <div className="py-8 text-[0.9rem] text-stone-500" role="status" aria-live="polite">
+                <div className={['py-8 text-[0.9rem]', terminalUnlocked ? 'font-mono text-stone-600' : 'text-stone-500'].join(' ')} role="status" aria-live="polite">
                   Loading section...
                 </div>
               }
             >
-              <div key={pathname} className="route-transition-enter">
+              <div key={pathname} className={terminalUnlocked ? 'terminal-typing terminal-content' : 'route-transition-enter'}>
                 <Routes>
                   <Route path="/" element={<Navigate to="/work" replace />} />
                   <Route path="/work" element={<Work />} />
@@ -305,6 +628,49 @@ export default function App() {
           </p>
         </div>
       </footer>
+
+      <aside className="recon-minimap hidden md:block" aria-label="Recon route map">
+        <p className="recon-minimap-label">Recon Map</p>
+        <svg viewBox="0 0 122 86" role="img" aria-label="Discovered route graph" className="recon-minimap-svg">
+          {RECON_EDGES.map(([from, to]) => {
+            const fromNode = RECON_NODES.find(({ path }) => path === from)
+            const toNode = RECON_NODES.find(({ path }) => path === to)
+            if (!fromNode || !toNode) {
+              return null
+            }
+
+            const edgeActive = discoveredRoutes.includes(from) && discoveredRoutes.includes(to)
+
+            return (
+              <line
+                key={`${from}-${to}`}
+                x1={fromNode.x}
+                y1={fromNode.y}
+                x2={toNode.x}
+                y2={toNode.y}
+                className={edgeActive ? 'recon-edge recon-edge-active' : 'recon-edge'}
+              />
+            )
+          })}
+
+          {RECON_NODES.map((node) => {
+            const isCurrent = node.path === pathname
+            const isDiscovered = discoveredRoutes.includes(node.path)
+            const nodeClass = isCurrent
+              ? 'recon-node recon-node-current'
+              : isDiscovered
+                ? 'recon-node recon-node-discovered'
+                : 'recon-node'
+
+            return (
+              <g key={node.path} transform={`translate(${node.x}, ${node.y})`}>
+                <circle r="4" className={nodeClass} />
+                <text x="6" y="3" className="recon-node-label">{node.short}</text>
+              </g>
+            )
+          })}
+        </svg>
+      </aside>
 
       </div>
 
