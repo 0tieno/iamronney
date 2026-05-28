@@ -73,6 +73,22 @@
       href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap"
       rel="stylesheet"
     />
+
+    <script>
+      // Rehydrate clean URLs after static 404 fallback redirects (GitHub Pages-style).
+      (function (location) {
+        if (!location.search || location.search.charAt(1) !== '/') {
+          return;
+        }
+
+        var decodedPath = location.search
+          .slice(1)
+          .replace(/~and~/g, '&')
+          .replace('&', '?');
+
+        window.history.replaceState(null, '', location.pathname.slice(0, -1) + decodedPath + location.hash);
+      })(window.location);
+    </script>
   </head>
   <body>
     <div id="root"></div>
