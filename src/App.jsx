@@ -71,6 +71,31 @@ const RECON_EDGES = [
 ]
 
 const MAX_INCIDENTS = 30
+const THEME_OPTIONS = ['system', 'light', 'poetic', 'void']
+
+function normalizeTheme(value) {
+  if (value === 'dark') {
+    return 'poetic'
+  }
+
+  return THEME_OPTIONS.includes(value) ? value : null
+}
+
+function resolveTheme(preference, systemPrefersDark) {
+  if (preference === 'light') {
+    return 'light'
+  }
+
+  if (preference === 'poetic') {
+    return 'poetic'
+  }
+
+  if (preference === 'void') {
+    return 'void'
+  }
+
+  return systemPrefersDark ? 'poetic' : 'light'
+}
 
 const TERMINAL_COMMANDS = [
   'help',
@@ -114,6 +139,8 @@ export default function App() {
   const previousPathRef = useRef(pathname)
   const previousUnlockRef = useRef(false)
   const [showReconBanner, setShowReconBanner] = useState(true)
+  const [themePreference, setThemePreference] = useState('light')
+  const [theme, setTheme] = useState('light')
   const [terminalUnlocked, setTerminalUnlocked] = useState(false)
   const [commandInput, setCommandInput] = useState('')
   const [commandOutput, setCommandOutput] = useState('Type help for available commands.')
@@ -208,6 +235,45 @@ export default function App() {
 
     return !(commandMatches.length === 1 && commandMatches[0] === normalizedInput)
   }, [commandInput, commandMatches])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const storedTheme = normalizeTheme(window.localStorage.getItem('iamronney_theme'))
+
+    if (storedTheme) {
+      setThemePreference(storedTheme)
+      window.localStorage.setItem('iamronney_theme', storedTheme)
+    } else {
+      setThemePreference('light')
+    }
+
+    function handleSystemThemeChange(event) {
+      if (themePreference !== 'system') {
+        return
+      }
+
+      setTheme(resolveTheme('system', event.matches))
+    }
+
+    mediaQuery.addEventListener('change', handleSystemThemeChange)
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleSystemThemeChange)
+    }
+  }, [themePreference])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const resolvedTheme = resolveTheme(themePreference, mediaQuery.matches)
+    setTheme(resolvedTheme)
+    document.documentElement.setAttribute('data-theme', resolvedTheme)
+  }, [themePreference])
+
+  function handleThemeChange(event) {
+    const nextPreference = event.target.value
+    setThemePreference(nextPreference)
+    window.localStorage.setItem('iamronney_theme', nextPreference)
+  }
 
   useEffect(() => {
     const label = LABEL_BY_PATH[pathname] ?? ''
@@ -516,7 +582,7 @@ export default function App() {
 
           {/* Left — sticky on scroll */}
           <div className="order-1 md:order-1 w-full md:w-auto md:self-stretch">
-            <LeftPanel />
+            <LeftPanel themePreference={themePreference} onThemeChange={handleThemeChange} />
 
             {/* Mobile navigation under left panel */}
             <div className={['mt-6 md:hidden w-full', terminalUnlocked ? 'hidden' : 'block'].join(' ')}>
