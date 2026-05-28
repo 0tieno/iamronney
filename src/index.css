@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  [data-theme='poetic'],
+  [data-theme='void'] {
+    color-scheme: dark;
+  }
+
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -16,6 +25,259 @@
   a {
     @apply transition-opacity duration-150;
   }
+}
+
+[data-theme='poetic'] body {
+  background-color: #030303;
+  background-image:
+    radial-gradient(1200px 520px at 12% -8%, rgba(38, 38, 38, 0.36), transparent 56%),
+    radial-gradient(900px 420px at 88% 108%, rgba(28, 28, 28, 0.26), transparent 60%);
+  color: #ebe8e1;
+}
+
+[data-theme='poetic'] .bg-white {
+  background-color: #080808 !important;
+}
+
+[data-theme='poetic'] .bg-stone-50 {
+  background-color: #0e0e0e !important;
+}
+
+[data-theme='poetic'] .bg-stone-100 {
+  background-color: #141414 !important;
+}
+
+[data-theme='poetic'] .border-stone-100 {
+  border-color: rgba(64, 64, 64, 0.62) !important;
+}
+
+[data-theme='poetic'] .border-stone-200 {
+  border-color: rgba(86, 86, 86, 0.7) !important;
+}
+
+[data-theme='poetic'] .border-stone-300 {
+  border-color: rgba(122, 122, 122, 0.76) !important;
+}
+
+[data-theme='poetic'] .text-stone-900 {
+  color: #f7f3ea !important;
+}
+
+[data-theme='poetic'] .text-stone-800 {
+  color: #e6e1d8 !important;
+}
+
+[data-theme='poetic'] .text-stone-700 {
+  color: #d4cec2 !important;
+}
+
+[data-theme='poetic'] .text-stone-600 {
+  color: #bcb7ac !important;
+}
+
+[data-theme='poetic'] .text-stone-500 {
+  color: #9f9a90 !important;
+}
+
+[data-theme='poetic'] .text-stone-400 {
+  color: #8e897f !important;
+}
+
+[data-theme='poetic'] .text-stone-300 {
+  color: #c8c2b6 !important;
+}
+
+[data-theme='poetic'] .text-brand-blue {
+  color: #82cfff !important;
+}
+
+[data-theme='poetic'] .text-brand-green {
+  color: #8fdfb6 !important;
+}
+
+[data-theme='poetic'] .hover\:bg-stone-50:hover {
+  background-color: #1c1c1c !important;
+}
+
+[data-theme='poetic'] .hover\:bg-stone-100:hover {
+  background-color: #1f1f1f !important;
+}
+
+[data-theme='poetic'] .hover\:bg-stone-200:hover {
+  background-color: #242424 !important;
+}
+
+[data-theme='poetic'] .recon-minimap {
+  background: rgba(8, 8, 8, 0.94);
+  border-color: rgba(110, 110, 110, 0.72);
+}
+
+[data-theme='poetic'] .recon-minimap-label,
+[data-theme='poetic'] .recon-node-label {
+  color: #d6d0c4;
+  fill: #d6d0c4;
+}
+
+[data-theme='void'] body {
+  background-color: #000;
+  background-image:
+    radial-gradient(1000px 420px at 50% -18%, rgba(18, 18, 18, 0.34), transparent 62%),
+    radial-gradient(780px 360px at 50% 120%, rgba(12, 12, 12, 0.2), transparent 66%);
+  color: #f0f0f0;
+}
+
+[data-theme='void'] .bg-white {
+  background-color: #050505 !important;
+}
+
+[data-theme='void'] .bg-stone-50 {
+  background-color: #090909 !important;
+}
+
+[data-theme='void'] .bg-stone-100 {
+  background-color: #101010 !important;
+}
+
+[data-theme='void'] .border-stone-100 {
+  border-color: rgba(44, 44, 44, 0.7) !important;
+}
+
+[data-theme='void'] .border-stone-200 {
+  border-color: rgba(62, 62, 62, 0.74) !important;
+}
+
+[data-theme='void'] .border-stone-300 {
+  border-color: rgba(88, 88, 88, 0.8) !important;
+}
+
+[data-theme='void'] .text-stone-900 {
+  color: #fafafa !important;
+}
+
+[data-theme='void'] .text-stone-800 {
+  color: #efefef !important;
+}
+
+[data-theme='void'] .text-stone-700 {
+  color: #dbdbdb !important;
+}
+
+[data-theme='void'] .text-stone-600 {
+  color: #bdbdbd !important;
+}
+
+[data-theme='void'] .text-stone-500,
+[data-theme='void'] .text-stone-400 {
+  color: #9f9f9f !important;
+}
+
+[data-theme='void'] .text-stone-300 {
+  color: #cfcfcf !important;
+}
+
+[data-theme='void'] .text-brand-blue {
+  color: #99d6ff !important;
+}
+
+[data-theme='void'] .text-brand-green {
+  color: #9fe8b7 !important;
+}
+
+[data-theme='void'] .hover\:bg-stone-50:hover,
+[data-theme='void'] .hover\:bg-stone-100:hover,
+[data-theme='void'] .hover\:bg-stone-200:hover {
+  background-color: #181818 !important;
+}
+
+[data-theme='void'] .recon-minimap {
+  background: rgba(3, 3, 3, 0.96);
+  border-color: rgba(84, 84, 84, 0.74);
+}
+
+[data-theme='void'] .recon-minimap-label,
+[data-theme='void'] .recon-node-label {
+  color: #d8d8d8;
+  fill: #d8d8d8;
+}
+
+[data-theme='poetic'] .theme-switcher {
+  background-color: #0c0c0c !important;
+  border-color: rgba(96, 96, 96, 0.86) !important;
+  color: #e7e2d6 !important;
+}
+
+[data-theme='poetic'] .theme-switcher-select {
+  color: #f1eadf !important;
+}
+
+[data-theme='poetic'] .theme-switcher-control {
+  border-left: 1px solid rgba(96, 96, 96, 0.55);
+  padding-left: 0.5rem;
+}
+
+[data-theme='poetic'] .theme-switcher-arrow {
+  color: #b7b0a4 !important;
+}
+
+[data-theme='poetic'] .theme-switcher option {
+  background-color: #0c0c0c;
+  color: #f1eadf;
+}
+
+[data-theme='void'] .theme-switcher {
+  background-color: #050505 !important;
+  border-color: rgba(84, 84, 84, 0.9) !important;
+  color: #f0ece2 !important;
+}
+
+[data-theme='void'] .theme-switcher-select {
+  color: #f2f2f2 !important;
+}
+
+[data-theme='void'] .theme-switcher-control {
+  border-left: 1px solid rgba(84, 84, 84, 0.58);
+  padding-left: 0.5rem;
+}
+
+[data-theme='void'] .theme-switcher-arrow {
+  color: #d2cbc0 !important;
+}
+
+[data-theme='void'] .theme-switcher option {
+  background-color: #050505;
+  color: #f2f2f2;
+}
+
+[data-theme='poetic'] .ctf-solved-pill {
+  background-color: rgba(17, 17, 17, 0.92) !important;
+  border-color: rgba(122, 122, 122, 0.82) !important;
+  color: #ece6da !important;
+}
+
+[data-theme='poetic'] .ctf-solved-panel {
+  background-color: rgba(10, 10, 10, 0.96) !important;
+  border-color: rgba(96, 96, 96, 0.76) !important;
+  color: #ddd7cb !important;
+}
+
+[data-theme='poetic'] .ctf-solved-panel p {
+  color: inherit !important;
+}
+
+[data-theme='void'] .ctf-solved-pill {
+  background-color: rgba(6, 6, 6, 0.98) !important;
+  border-color: rgba(96, 96, 96, 0.86) !important;
+  color: #f0ece2 !important;
+}
+
+[data-theme='void'] .ctf-solved-panel {
+  background-color: rgba(4, 4, 4, 0.98) !important;
+  border-color: rgba(74, 74, 74, 0.84) !important;
+  color: #e6e1d8 !important;
+}
+
+[data-theme='void'] .ctf-solved-panel p {
+  color: inherit !important;
 }
 
 @keyframes route-enter {
