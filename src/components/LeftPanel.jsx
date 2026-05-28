@@ -37,7 +37,7 @@ export default function LeftPanel() {
         {profile.name}
       </h1>
 
-      {/* Avatar — place your photo at public/profile.png */}
+      {/* Avatar */}
       <img
         src={`${import.meta.env.BASE_URL}profile-pic.jpeg`}
         alt={profile.name}
