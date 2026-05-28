@@ -61,8 +61,8 @@ export default function App() {
   useEffect(() => {
     const label = navItems.find((n) => n.id === active)?.label ?? ''
     document.title = active === 'not-found'
-      ? 'Ronney — 404 Not Found'
-      : `Ronney${label ? ` — ${label}` : ''}`
+      ? 'i am ronney — 404 Not Found'
+      : `i am ronney${label ? ` — ${label}` : ''}`
 
     if (active !== 'not-found') {
       history.replaceState(null, '', `#${active}`)
