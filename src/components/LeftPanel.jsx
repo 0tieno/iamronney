@@ -31,7 +31,7 @@ const icons = {
   ),
 }
 
-export default function LeftPanel() {
+export default function LeftPanel({ themePreference, onThemeChange }) {
   const ctfFlag = useMemo(
     () => `${FLAG_PARTS[0]}{${FLAG_PARTS[1]}_${FLAG_PARTS[2]}_${FLAG_PARTS[3]}}`,
     []
@@ -155,7 +155,7 @@ export default function LeftPanel() {
             CTF // Mini Challenge
           </p> */}
           {ctfSolved ? (
-            <span className="rounded-full border border-emerald-200 bg-emerald-100 px-2 py-0.5 text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-emerald-800">
+            <span className="ctf-solved-pill rounded-full border px-2 py-0.5 text-[0.58rem] font-semibold uppercase tracking-[0.12em]">
               solved
             </span>
           ) : null}
@@ -196,11 +196,11 @@ export default function LeftPanel() {
         </form>
 
         {ctfSolved ? (
-          <div className="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-2">
-            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.09em] text-emerald-800">
+          <div className="ctf-solved-panel mt-3 rounded-lg border px-2.5 py-2">
+            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.09em]">
               Recon Ranger Badge Unlocked
             </p>
-            <p className="mt-1 text-[0.68rem] text-emerald-700">
+            <p className="mt-1 text-[0.68rem]">
               Surface mapped. Vector confirmed.
             </p>
           </div>
@@ -239,6 +239,28 @@ export default function LeftPanel() {
             {icons[label]}
           </a>
         ))}
+      </div>
+
+      <div className="mt-6 border-t border-stone-200 pt-4">
+        <label className="theme-switcher flex items-center justify-between gap-3 rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-stone-600">
+          <span>Theme</span>
+          <span className="theme-switcher-control flex items-center gap-1">
+            <select
+              value={themePreference}
+              onChange={onThemeChange}
+              className="theme-switcher-select min-w-[6.2rem] appearance-none bg-transparent pr-4 text-right font-semibold text-stone-700 focus:outline-none"
+              aria-label="Theme selector"
+            >
+              <option value="system">System</option>
+              <option value="light">Light</option>
+              <option value="poetic">Poetic</option>
+              <option value="void">Void</option>
+            </select>
+            <span aria-hidden="true" className="theme-switcher-arrow text-stone-500">
+              ▾
+            </span>
+          </span>
+        </label>
       </div>
 
     </aside>
