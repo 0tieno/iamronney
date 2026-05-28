@@ -19,8 +19,17 @@ const SECTION_MAP = {
 
 const VALID_IDS = Object.keys(SECTION_MAP)
 
+function getBasePath() {
+  const base = import.meta.env.BASE_URL || '/'
+  return base.endsWith('/') ? base.slice(0, -1) : base
+}
+
 function getInitialSection() {
-  if (window.location.pathname !== '/') {
+  const pathname = window.location.pathname.replace(/\/$/, '')
+  const basePath = getBasePath()
+
+  // Accept only the app root path so deep non-hash URLs render the local 404 view.
+  if (pathname !== basePath) {
     return 'not-found'
   }
 
