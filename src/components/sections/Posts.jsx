@@ -22,7 +22,7 @@ function PostDetail({ post, onBack }) {
         <span className="text-[0.75rem] text-stone-400">{post.date}</span>
       </div>
 
-      <h2 className="text-[2rem] font-semibold leading-tight tracking-tight text-stone-900 mb-6 max-w-[680px]">
+      <h2 className="rhythm-heading text-[2rem] font-semibold leading-tight tracking-tight text-stone-900 mb-6 max-w-[680px]">
         {post.title}
       </h2>
 
@@ -50,7 +50,7 @@ export default function Posts() {
         id="posts-heading"
         className="text-[2.5rem] font-semibold leading-none tracking-tight text-stone-900 mb-8"
       >
-        <span className="underline decoration-brand-green decoration-[3px] underline-offset-[7px]">Posts</span>
+        <span className="rhythm-heading underline decoration-brand-green decoration-[3px] underline-offset-[7px]">Posts</span>
       </h2>
       <ul className="flex flex-col gap-8">
         {posts.map((post) => (
