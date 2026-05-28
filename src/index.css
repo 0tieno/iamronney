@@ -17,3 +17,26 @@
     @apply transition-opacity duration-150;
   }
 }
+
+@keyframes route-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.route-transition-enter {
+  animation: route-enter 280ms ease-out;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-transition-enter {
+    animation: none;
+  }
+}
