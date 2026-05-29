@@ -114,27 +114,6 @@ export const posts = [
         ],
     },
     {
-        slug: 'twenty-three-in-one-breath',
-        title: 'Twenty-Three, in One Breath',
-        date: 'May 28, 2026',
-        tag: 'Poetry',
-        excerpt:
-            'A short birthday poem: sharp, direct, and honest.',
-        body: [
-            'I am twenty-three today.',
-            'Still soft enough to feel, still stubborn enough to build.',
-            'I have lost things and not lost myself.',
-            'I have failed loudly and still chosen tomorrow.',
-            'I have learned that speed is not the same as purpose.',
-            'I have learned that rest is part of the work.',
-            'I have learned that love is not weakness.',
-            'So here I am: unfinished, faithful, dangerous to despair.',
-            'If grace brought me this far, discipline will carry me farther.',
-            'Twenty-three is not my arrival.',
-            'Twenty-three is my yes.',
-        ],
-    },
-    {
         slug: 'a-prayer-at-twenty-three',
         title: 'A Prayer at Twenty-Three',
         date: 'May 28, 2026',
