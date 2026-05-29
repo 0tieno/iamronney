@@ -12,14 +12,10 @@ export default function Work() {
 
       {/* Opening statement */}
       <div className="mb-10 space-y-3 max-w-[580px]">
-        <p className="text-[0.9rem] text-stone-500 leading-[1.8]">
-          I have been fortunate to work with some amazing teams
-        </p>
-        <p className="text-[0.9rem] text-stone-500 leading-[1.8]">And&hellip;</p>
+        <p className="text-[0.9rem] text-stone-500 leading-[1.8]">{work.introParagraphs?.[0]}</p>
+        <p className="text-[0.9rem] text-stone-500 leading-[1.8]">{work.introParagraphs?.[1]}</p>
         <p className="text-[0.9rem] text-stone-600 leading-[1.8]">
-          When I think about how I'd like to spend my days alive (and consequently remembered for
-          when no more), I think of giving everything I put my mind and body to, everything. They
-          call it dying broke, having used time, chance, and perhaps luck for a death worth living.{' '}
+          {work.introParagraphs?.[2]}{' '}
           <em className="text-brand-blue not-italic font-medium">When I like it, I crown it.</em>
         </p>
       </div>
