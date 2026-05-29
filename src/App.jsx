@@ -3,7 +3,7 @@ import { Navigate, NavLink, Route, Routes, useLocation, useNavigate } from 'reac
 import LeftPanel from './components/LeftPanel'
 import Work from './components/sections/Work'
 import NotFound from './components/sections/NotFound'
-import { navItems, profile } from './data/content'
+import { navItems, posts, profile } from './data/content'
 
 const About = lazy(() => import('./components/sections/About'))
 const Conferences = lazy(() => import('./components/sections/Conferences'))
@@ -24,6 +24,90 @@ const LABEL_BY_PATH = {
   '/conferences': navItems.find(({ id }) => id === 'conferences')?.label ?? 'Conferences',
   '/achievements': navItems.find(({ id }) => id === 'achievements')?.label ?? 'Achievements',
   '/posts': navItems.find(({ id }) => id === 'posts')?.label ?? 'Posts',
+}
+
+const SITE_URL = 'https://0tieno.github.io/iamronney'
+const DEFAULT_SHARE_IMAGE = `${SITE_URL}/profile.png`
+
+const META_BY_PATH = {
+  '/work': {
+    title: 'My Work',
+    description: 'Selected projects, architecture choices, and practical security-first engineering work.',
+    type: 'website',
+  },
+  '/about': {
+    title: 'About',
+    description: 'About Ronney: security practitioner, backend engineer, writer, and builder.',
+    type: 'profile',
+  },
+  '/conferences': {
+    title: 'Conferences, Presentations & Publications',
+    description: 'Conference talks, presentations, and publications across security, cloud, and engineering.',
+    type: 'website',
+  },
+  '/achievements': {
+    title: 'Achievements, Honors & Awards',
+    description: 'Milestones, recognitions, and awards from security and engineering work.',
+    type: 'website',
+  },
+  '/posts': {
+    title: 'Posts',
+    description: 'Essays, technical writing, and poetry by Ronney.',
+    type: 'website',
+  },
+}
+
+function upsertMetaTag({ name, property, content }) {
+  const selector = name ? `meta[name="${name}"]` : `meta[property="${property}"]`
+  const existing = document.head.querySelector(selector)
+
+  if (existing) {
+    existing.setAttribute('content', content)
+    return
+  }
+
+  const meta = document.createElement('meta')
+  if (name) {
+    meta.setAttribute('name', name)
+  }
+  if (property) {
+    meta.setAttribute('property', property)
+  }
+  meta.setAttribute('content', content)
+  document.head.appendChild(meta)
+}
+
+function upsertCanonicalTag(href) {
+  const existing = document.head.querySelector('link[rel="canonical"]')
+  if (existing) {
+    existing.setAttribute('href', href)
+    return
+  }
+
+  const link = document.createElement('link')
+  link.setAttribute('rel', 'canonical')
+  link.setAttribute('href', href)
+  document.head.appendChild(link)
+}
+
+function getMetaForPath(pathname) {
+  const matchedPost = pathname.startsWith('/posts/')
+    ? posts.find(({ slug }) => pathname === `/posts/${slug}`)
+    : null
+
+  if (matchedPost) {
+    return {
+      title: matchedPost.title,
+      description: matchedPost.excerpt,
+      type: 'article',
+    }
+  }
+
+  return META_BY_PATH[pathname] ?? {
+    title: '404 Not Found',
+    description: 'Requested portfolio route was not found.',
+    type: 'website',
+  }
 }
 
 const ARTIFACT_BY_PATH = {
@@ -276,10 +360,22 @@ export default function App() {
   }
 
   useEffect(() => {
-    const label = LABEL_BY_PATH[pathname] ?? ''
-    document.title = label
-      ? `i am ronney — ${label}`
-      : 'i am ronney — 404 Not Found'
+    const pageMeta = getMetaForPath(pathname)
+    const cleanPath = pathname.startsWith('/') ? pathname : `/${pathname}`
+    const pageUrl = `${SITE_URL}${cleanPath}`
+
+    document.title = `i am ronney — ${pageMeta.title}`
+
+    upsertMetaTag({ name: 'description', content: pageMeta.description })
+    upsertMetaTag({ property: 'og:title', content: pageMeta.title })
+    upsertMetaTag({ property: 'og:description', content: pageMeta.description })
+    upsertMetaTag({ property: 'og:type', content: pageMeta.type })
+    upsertMetaTag({ property: 'og:url', content: pageUrl })
+    upsertMetaTag({ property: 'og:image', content: DEFAULT_SHARE_IMAGE })
+    upsertMetaTag({ name: 'twitter:title', content: pageMeta.title })
+    upsertMetaTag({ name: 'twitter:description', content: pageMeta.description })
+    upsertMetaTag({ name: 'twitter:image', content: DEFAULT_SHARE_IMAGE })
+    upsertCanonicalTag(pageUrl)
   }, [pathname])
 
   useEffect(() => {
@@ -768,6 +864,7 @@ export default function App() {
                   <Route path="/conferences" element={<Conferences />} />
                   <Route path="/achievements" element={<Achievements />} />
                   <Route path="/posts" element={<Posts />} />
+                  <Route path="/posts/:slug" element={<Posts />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>
