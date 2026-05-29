@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useMemo } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { posts } from '../../data/content'
 
-function PostDetail({ post, onBack }) {
+function PostDetail({ post }) {
+  const navigate = useNavigate()
+
   return (
     <article className="animate-fade-slide-up">
       <button
         type="button"
-        onClick={onBack}
+        onClick={() => navigate('/posts')}
         className="inline-flex items-center gap-1.5 text-[0.8rem] text-brand-blue hover:text-stone-900 hover:underline underline-offset-[3px] mb-8 bg-transparent border-0 cursor-pointer p-0"
       >
         <svg viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
@@ -38,10 +41,42 @@ function PostDetail({ post, onBack }) {
 }
 
 export default function Posts() {
-  const [selected, setSelected] = useState(null)
+  const { slug } = useParams()
+
+  const selected = useMemo(() => {
+    if (!slug) {
+      return null
+    }
+
+    return posts.find((post) => post.slug === slug) ?? null
+  }, [slug])
+
+  const isUnknownSlug = Boolean(slug) && !selected
 
   if (selected) {
-    return <PostDetail post={selected} onBack={() => setSelected(null)} />
+    return <PostDetail post={selected} />
+  }
+
+  if (isUnknownSlug) {
+    return (
+      <section aria-labelledby="posts-missing-heading" className="animate-fade-slide-up">
+        <h2 id="posts-missing-heading" className="text-[2rem] font-semibold leading-tight tracking-tight text-stone-900 mb-3">
+          Post not found
+        </h2>
+        <p className="text-[0.95rem] text-stone-700 leading-[1.8] mb-6">
+          This post link is invalid or the post was moved.
+        </p>
+        <Link
+          to="/posts"
+          className="inline-flex items-center gap-1.5 text-[0.86rem] font-semibold text-brand-blue hover:text-stone-900 hover:underline underline-offset-[3px]"
+        >
+          Back to Posts
+          <svg viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
+            <path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z" />
+          </svg>
+        </Link>
+      </section>
+    )
   }
 
   return (
@@ -61,13 +96,12 @@ export default function Posts() {
               </span>
               <span className="text-[0.75rem] text-stone-400">{post.date}</span>
             </div>
-            <button
-              type="button"
-              onClick={() => setSelected(post)}
-              className="block text-left text-[1.05rem] font-semibold text-stone-900 leading-snug mb-2 hover:underline underline-offset-[3px] decoration-brand-green bg-transparent border-0 cursor-pointer p-0"
+            <Link
+              to={`/posts/${post.slug}`}
+              className="block text-left text-[1.05rem] font-semibold text-stone-900 leading-snug mb-2 hover:underline underline-offset-[3px] decoration-brand-green"
             >
               {post.title}
-            </button>
+            </Link>
             <p className="text-[0.9rem] text-stone-600 leading-[1.8]">{post.excerpt}</p>
           </li>
         ))}
