@@ -35,6 +35,26 @@ export const navItems = [
 // ─── Posts ───────────────────────────────────────────────────────────────────
 export const posts = [
     {
+        slug: 'where-i-want-to-be-in-five-years',
+        title: 'Where I Want to Be in the Next 5 Years',
+        date: 'May 29, 2026',
+        tag: 'Career',
+        excerpt:
+            'The interview question I get all the time: where do you see yourself in five years, and what I am actually building toward.',
+        body: [
+            'I get this question in almost every serious interview: where do you see yourself in the next five years?',
+            'My answer is simple, but not vague: I want to be trusted for high-stakes technical judgement at the intersection of backend engineering, security, and cloud systems.',
+            'In five years, I do not just want to be writing tickets and shipping tasks. I want to be the engineer people call when the situation is unclear, expensive, and risky. The person who can read a messy system quickly, identify the real problem, and choose the right trade-off.',
+            'On the backend side, I want deep ownership of production systems: architecture decisions, reliability strategy, performance tuning, observability, incident response, and scalable API design. I want to build services that are boring in production for the right reasons: strong design, clear telemetry, and disciplined operations.',
+            'On the security side, I want to move from tactical fixes to strategic influence. Not only finding vulnerabilities, but shaping secure-by-default engineering practices, threat models, and review culture across teams. I want security to be integrated into product and platform decisions from day one, not added during panic.',
+            'On the cloud side, I want mastery of cloud-native infrastructure and DevSecOps execution: policy-as-code, identity and access controls, secure deployment pipelines, and resilient architectures that survive real-world failure modes.',
+            'I also want to keep building in public through writing, open source, and speaking. Not for visibility alone, but because teaching sharpens judgement and creates opportunities for other people coming from where I came from.',
+            'Leadership is part of this five-year plan, but I do not mean title-first leadership. I mean technical leadership: better decisions under uncertainty, clear communication during incidents, mentorship for junior engineers, and the ability to align engineering quality with business outcomes.',
+            'If you ask me for one sentence: in five years I want to be a trusted senior engineer or security-minded platform leader whose judgement improves systems, teams, and outcomes.',
+            'That is the destination. The path is what I am already doing now: learning aggressively, shipping consistently, documenting clearly, and choosing environments that reward ownership and depth.',
+        ],
+    },
+    {
         slug: 'sable-moon-love-sonnet',
         title: 'When Moon in Sable Robes Doth Court the Sea',
         date: 'May 28, 2026',
