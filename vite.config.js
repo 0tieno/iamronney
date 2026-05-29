@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
-import { posts } from './src/data/content'
+import { about, achievements, conferences, posts, work } from './src/data/content'
 
 const SITE_URL = 'https://0tieno.github.io/iamronney'
 
@@ -13,6 +13,37 @@ function escapeHtml(value) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;')
+}
+
+function firstTwoSentences(value) {
+    const normalized = String(value ?? '').replace(/\s+/g, ' ').trim()
+    if (!normalized) {
+        return ''
+    }
+
+    const sentences = normalized
+        .match(/[^.!?]+[.!?]+(?:["')\]]+)?|[^.!?]+$/g)
+        ?.map((sentence) => sentence.trim())
+        .filter(Boolean)
+
+    if (!sentences?.length) {
+        return normalized
+    }
+
+    return sentences.slice(0, 2).join(' ')
+}
+
+function toMetaExcerpt(value, maxLength = 220) {
+    const selected = firstTwoSentences(value)
+    if (!selected) {
+        return ''
+    }
+
+    if (selected.length <= maxLength) {
+        return selected
+    }
+
+    return `${selected.slice(0, maxLength - 3)}...`
 }
 
 function buildPreviewHtml({ pageTitle, description, canonicalUrl, imageUrl, type, routePath, base }) {
@@ -64,31 +95,31 @@ function socialPreviewPages({ base }) {
         {
             routePath: '/work',
             pageTitle: 'i am ronney — My Work',
-            description: 'Selected projects, architecture choices, and practical security-first engineering work.',
+            description: toMetaExcerpt(work.introParagraphs?.[0]),
             type: 'website',
         },
         {
             routePath: '/about',
             pageTitle: 'i am ronney — About',
-            description: 'About Ronney: security practitioner, backend engineer, writer, and builder.',
+            description: toMetaExcerpt(about.paragraphs?.[0]),
             type: 'profile',
         },
         {
             routePath: '/conferences',
             pageTitle: 'i am ronney — Conferences, Presentations & Publications',
-            description: 'Conference talks, presentations, and publications across security, cloud, and engineering.',
+            description: toMetaExcerpt(conferences.paragraphs?.[0]),
             type: 'website',
         },
         {
             routePath: '/achievements',
             pageTitle: 'i am ronney — Achievements, Honors & Awards',
-            description: 'Milestones, recognitions, and awards from security and engineering work.',
+            description: toMetaExcerpt(achievements.paragraphs?.[0]),
             type: 'website',
         },
         {
             routePath: '/posts',
             pageTitle: 'i am ronney — Posts',
-            description: 'Essays, technical writing, and poetry by Ronney.',
+            description: toMetaExcerpt(posts[0]?.body?.[0] ?? posts[0]?.excerpt),
             type: 'website',
         },
     ]
@@ -96,7 +127,7 @@ function socialPreviewPages({ base }) {
     const postPages = posts.map((post) => ({
         routePath: `/posts/${post.slug}`,
         pageTitle: `i am ronney — ${post.title}`,
-        description: post.excerpt,
+        description: toMetaExcerpt(post.body?.[0] ?? post.excerpt),
         type: 'article',
     }))
 
