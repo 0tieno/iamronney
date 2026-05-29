@@ -3,7 +3,7 @@ import { Navigate, NavLink, Route, Routes, useLocation, useNavigate } from 'reac
 import LeftPanel from './components/LeftPanel'
 import Work from './components/sections/Work'
 import NotFound from './components/sections/NotFound'
-import { navItems, posts, profile } from './data/content'
+import { about, achievements, conferences, navItems, posts, profile, work } from './data/content'
 
 const About = lazy(() => import('./components/sections/About'))
 const Conferences = lazy(() => import('./components/sections/Conferences'))
@@ -29,30 +29,61 @@ const LABEL_BY_PATH = {
 const SITE_URL = 'https://0tieno.github.io/iamronney'
 const DEFAULT_SHARE_IMAGE = `${SITE_URL}/profile.png`
 
+function firstTwoSentences(value) {
+  const normalized = String(value ?? '').replace(/\s+/g, ' ').trim()
+  if (!normalized) {
+    return ''
+  }
+
+  const sentences = normalized
+    .match(/[^.!?]+[.!?]+(?:["')\]]+)?|[^.!?]+$/g)
+    ?.map((sentence) => sentence.trim())
+    .filter(Boolean)
+
+  if (!sentences?.length) {
+    return normalized
+  }
+
+  return sentences.slice(0, 2).join(' ')
+}
+
+function toMetaExcerpt(value, maxLength = 220) {
+  const selected = firstTwoSentences(value)
+  if (!selected) {
+    return ''
+  }
+
+  if (selected.length <= maxLength) {
+    return selected
+  }
+
+  return `${selected.slice(0, maxLength - 3)}...`
+}
+
 const META_BY_PATH = {
   '/work': {
     title: 'My Work',
-    description: 'Selected projects, architecture choices, and practical security-first engineering work.',
+    description: toMetaExcerpt(work.introParagraphs?.[0]),
     type: 'website',
   },
   '/about': {
     title: 'About',
-    description: 'About Ronney: security practitioner, backend engineer, writer, and builder.',
+    description: toMetaExcerpt(about.paragraphs?.[0]),
     type: 'profile',
   },
   '/conferences': {
     title: 'Conferences, Presentations & Publications',
-    description: 'Conference talks, presentations, and publications across security, cloud, and engineering.',
+    description: toMetaExcerpt(conferences.paragraphs?.[0]),
     type: 'website',
   },
   '/achievements': {
     title: 'Achievements, Honors & Awards',
-    description: 'Milestones, recognitions, and awards from security and engineering work.',
+    description: toMetaExcerpt(achievements.paragraphs?.[0]),
     type: 'website',
   },
   '/posts': {
     title: 'Posts',
-    description: 'Essays, technical writing, and poetry by Ronney.',
+    description: toMetaExcerpt(posts[0]?.body?.[0] ?? posts[0]?.excerpt),
     type: 'website',
   },
 }
@@ -98,7 +129,7 @@ function getMetaForPath(pathname) {
   if (matchedPost) {
     return {
       title: matchedPost.title,
-      description: matchedPost.excerpt,
+      description: toMetaExcerpt(matchedPost.body?.[0] ?? matchedPost.excerpt),
       type: 'article',
     }
   }
