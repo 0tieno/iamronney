@@ -11,7 +11,8 @@ describe('App routing', () => {
     )
 
     await waitFor(() => {
-      expect(screen.getByRole('link', { name: /work/i })).toHaveAttribute('aria-current', 'page')
+      const workLinks = screen.getAllByRole('link', { name: /work/i })
+      expect(workLinks.some((link) => link.getAttribute('aria-current') === 'page')).toBe(true)
     })
   })
 

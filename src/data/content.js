@@ -390,12 +390,10 @@ export const posts = [
 
 // ─── Work ────────────────────────────────────────────────────────────────────
 export const work = {
-    primary: [
-        { role: 'Platform Engineer', company: 'Savannah Informatics Limited', period: 'Nov, 2025 – Present' },
-        { role: 'Program Associate', company: 'KamiLimu', period: 'Feb, 2024 – Present' },
-        { role: 'Outreachy Intern', company: 'NixOs – Nix@NGI Team', period: 'May – September, 2025' },
-        { role: 'Program Associate', company: 'Positive Sum Africa', period: 'Oct, 2024 – Apr, 2025' },
-        { role: 'Mobile Security Fellowship', company: 'Mobile Hacking Lab', period: 'Jul – Nov, 2024' },
+    introParagraphs: [
+        'I have been fortunate to work with some amazing teams',
+        'And...',
+        "When I think about how I'd like to spend my days alive (and consequently remembered for when no more), I think of giving everything I put my mind and body to, everything. They call it dying broke, having used time, chance, and perhaps luck for a death worth living.",
     ],
     secondary: [
         // {
@@ -465,5 +463,21 @@ export const about = {
     paragraphs: [
         "I do not know what I may appear to the world, but to myself I seem to have been only like a boy playing on the sea shore, and diverting myself in now and then finding a smooother pebble or a prettier shell than ordinary, whilist the greater ocean of truth lay all undiscovered before me.",
     ],
-    highlight: "I just want to be useful! I'm even writing a book about it",
+}
+
+export const conferences = {
+    paragraphs: [
+        'I have always wanted to be a hacker. To be hacky. Daring, unapologetic, creative, artsy, and a little nerdy. I love doing hard things even though I do not do them all the time, or as much as I would love to.',
+        'I have always wanted to be the decision maker ...AI, robot can do the work but I want to be paid for my judgement.',
+        'I have always wanted to be on big stages and screens sharing with the community whether in tech or in church.',
+        'I have presented in several events(self invited and invited). I have also declined some invitations to speak in some events I wanted before.',
+    ],
+}
+
+export const achievements = {
+    paragraphs: [
+        'I have received several awards and recognitions spanning leadership, career and in spritual sphere. No sports award though neither bad recognition either! All the way from childhood to date.',
+        'The first one I remember I was told.',
+        'The last one I know, it was a global recognition award and honor.',
+    ],
 }
