@@ -21,7 +21,7 @@ export default function Work() {
       </div>
 
       {/* Roles — collapsible toggles */}
-      <div className="divide-y divide-stone-100">
+      <div className="divide-y divide-stone-200/40">
         {work.secondary.map(({ role, company, period, contributions }, i) => (
           <details key={i} className="group py-1">
             <summary className="flex items-center justify-between gap-4 cursor-pointer py-2 list-none [&::-webkit-details-marker]:hidden select-none">
