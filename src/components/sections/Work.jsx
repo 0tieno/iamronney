@@ -21,10 +21,14 @@ export default function Work() {
       </div>
 
       {/* Roles — collapsible toggles */}
-      <div className="divide-y divide-stone-200/40">
+      <div className="relative ml-1.5 border-l-2 border-stone-100 space-y-0.5">
         {work.secondary.map(({ role, company, period, contributions }, i) => (
-          <details key={i} className="group py-1">
-            <summary className="flex items-center justify-between gap-4 cursor-pointer py-2 list-none [&::-webkit-details-marker]:hidden select-none">
+          <details key={i} className="group relative pl-5 py-1.5">
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -left-[7px] top-[15px] h-3 w-3 rounded-full border-2 border-stone-300 bg-white transition-colors duration-200 group-open:border-brand-green group-open:bg-brand-green"
+            />
+            <summary className="flex items-center justify-between gap-4 cursor-pointer py-1.5 list-none [&::-webkit-details-marker]:hidden select-none">
               <span className="text-[0.9rem] leading-[1.7]">
                 <span className="text-brand-green font-medium">{role}</span>
                 <span className="text-stone-500">{', '}{company}</span>
