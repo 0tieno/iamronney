@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { annotate } from 'rough-notation'
 import { profile } from '../data/content'
 
 const FLAG_PARTS = ['flag', 'iamronney', 'surface', 'mapped']
@@ -40,6 +41,27 @@ export default function LeftPanel({ themePreference, onThemeChange }) {
   const [ctfInput, setCtfInput] = useState('')
   const [ctfSolved, setCtfSolved] = useState(false)
   const [ctfWrong, setCtfWrong] = useState(false)
+
+  const hireRef = useRef(null)
+
+  useEffect(() => {
+    if (!hireRef.current) return
+    const annotation = annotate(hireRef.current, {
+      type: 'box',
+      color: '#f59e0b',
+      strokeWidth: 1.2,
+      padding: [4, 6],
+      animate: true,
+      animationDuration: 600,
+      iterations: 2,
+      multiline: true,
+    })
+    const timer = setTimeout(() => annotation.show(), 400)
+    return () => {
+      clearTimeout(timer)
+      annotation.remove()
+    }
+  }, [])
 
   useEffect(() => {
     const storedState = window.localStorage.getItem('iamronney_ctf_solved')
@@ -103,7 +125,7 @@ export default function LeftPanel({ themePreference, onThemeChange }) {
 
       {/* Taglines */}
       {profile.taglines.map((line, i) => (
-        <p key={i} className="text-sm text-stone-500 leading-[1.8] mb-3">
+        <p key={i} ref={i === 1 ? hireRef : null} className="text-sm text-stone-500 leading-[1.8] mb-3">
           {line}
         </p>
       ))}
