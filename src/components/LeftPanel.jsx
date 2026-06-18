@@ -43,7 +43,23 @@ export default function LeftPanel({ themePreference, onThemeChange }) {
   const [ctfWrong, setCtfWrong] = useState(false)
 
   const hireRef = useRef(null)
+  const taglineRef = useRef(null)
 
+  // Typewriter on the "> I get things done" line
+  const TYPEWRITER_TEXT = '> I get things done . Excellence is Worship'
+  const [typed, setTyped] = useState('')
+  useEffect(() => {
+    let i = 0
+    setTyped('')
+    const interval = setInterval(() => {
+      i++
+      setTyped(TYPEWRITER_TEXT.slice(0, i))
+      if (i >= TYPEWRITER_TEXT.length) clearInterval(interval)
+    }, 38)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Rough-notation: animated box on hire line
   useEffect(() => {
     if (!hireRef.current) return
     const annotation = annotate(hireRef.current, {
@@ -62,6 +78,7 @@ export default function LeftPanel({ themePreference, onThemeChange }) {
       annotation.remove()
     }
   }, [])
+
 
   useEffect(() => {
     const storedState = window.localStorage.getItem('iamronney_ctf_solved')
@@ -111,24 +128,27 @@ export default function LeftPanel({ themePreference, onThemeChange }) {
 
         <div className="mt-2 h-px w-28 bg-stone-300" />
 
-        <p className="mt-2 font-mono text-[0.64rem] tracking-[0.14em] text-stone-500">
-          &gt; I get things done . Excellence is Worship
-        </p> 
+        <p ref={taglineRef} className="mt-2 font-mono text-[0.64rem] tracking-[0.14em] text-stone-500 terminal-cursor">
+          {typed}
+        </p>
       </div>
 
       {/* Avatar */}
-      <img
-        src={`${import.meta.env.BASE_URL}profile-pic.jpeg`}
-        alt={profile.name}
-        className="w-32 h-32 rounded-full object-cover object-top mb-6 grayscale hover:grayscale-0 transition-all duration-300"
-      />
+      <div className="scanline-wrap w-32 h-32 mb-6 rounded-full">
+        <img
+          src={`${import.meta.env.BASE_URL}profile-pic.jpeg`}
+          alt={profile.name}
+          className="w-32 h-32 rounded-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-300"
+        />
+      </div>
 
       {/* Taglines */}
-      {profile.taglines.map((line, i) => (
-        <p key={i} ref={i === 1 ? hireRef : null} className="text-sm text-stone-500 leading-[1.8] mb-3">
-          {line}
-        </p>
-      ))}
+      <p className="text-sm text-stone-500 leading-[1.8] mb-3">
+        {profile.taglines[0]}
+      </p>
+      <p ref={hireRef} className="text-sm text-stone-500 leading-[1.8] mb-3">
+        {profile.taglines[1]}
+      </p>
 
       {/* Microsoft MVP badge */}
       <a
