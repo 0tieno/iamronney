@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { posts } from '../../data/content'
+import { useRoughUnderline } from '../../hooks/useRoughUnderline'
 
 function PostDetail({ post }) {
   const navigate = useNavigate()
@@ -42,6 +43,7 @@ function PostDetail({ post }) {
 
 export default function Posts() {
   const { slug } = useParams()
+  const headingRef = useRoughUnderline('#22c55e', 300)
 
   const selected = useMemo(() => {
     if (!slug) {
@@ -85,7 +87,7 @@ export default function Posts() {
         id="posts-heading"
         className="text-[2.5rem] font-semibold leading-none tracking-tight text-stone-900 mb-8"
       >
-        <span className="rhythm-heading underline decoration-brand-green decoration-[3px] underline-offset-[7px]">Posts</span>
+        <span ref={headingRef} className="rhythm-heading">Posts</span>
       </h2>
       <ul className="flex flex-col gap-8">
         {posts.map((post) => (
