@@ -1,6 +1,8 @@
 import { about } from '../../data/content'
+import { useRoughUnderline } from '../../hooks/useRoughUnderline'
 
 export default function About() {
+  const headingRef = useRoughUnderline('#22c55e', 300)
   return (
     <section
       aria-labelledby="about-heading"
@@ -12,7 +14,7 @@ export default function About() {
         id="about-heading"
         className="text-[2.5rem] font-semibold leading-none tracking-tight text-stone-900 mb-8"
       >
-        <span className="rhythm-heading underline decoration-brand-green decoration-[3px] underline-offset-[7px]">About</span>
+        <span ref={headingRef} className="rhythm-heading">About</span>
       </h2>
 
       <p className="text-[0.9rem] text-stone-800 leading-[1.85] mb-8">
