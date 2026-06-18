@@ -89,9 +89,9 @@ export default function LeftPanel({ themePreference, onThemeChange }) {
 
         <div className="mt-2 h-px w-28 bg-stone-300" />
 
-        {/* <p className="mt-2 font-mono text-[0.64rem] tracking-[0.14em] text-stone-500">
-          &gt; backend.security.devsecops
-        </p> */}
+        <p className="mt-2 font-mono text-[0.64rem] tracking-[0.14em] text-stone-500">
+          &gt; I get things done . Excellence is Worship
+        </p> 
       </div>
 
       {/* Avatar */}
