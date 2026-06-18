@@ -411,7 +411,6 @@ export const work = {
             period: "2025 – 'Present",
             contributions: [
                 'Safaricom is the biggest corporate technology company in the country (Kenya, Ethiopia) controlling about 80% of all mobile money and mobile service usage in the country. Developed solutions here hit users in the millions per week. Currently close to 60 million subscribers in one Network. It runs the biggest fintech platform [Mpesa] in Africa. It is all about transforming Lives!',
-                'Part of my code is in production transforming those lives',
                 'Joined as an intern, internship ended. I am still here at safaricom.',
                 'This is 1 of 2 of my dream company.'
             ],
@@ -476,7 +475,7 @@ export const conferences = {
 
 export const achievements = {
     paragraphs: [
-        'I have received several awards and recognitions spanning leadership, career and in spritual sphere. No sports award though neither bad recognition either! All the way from childhood to date.'
+        'I have received several awards and recognitions spanning leadership, career and in spritual sphere. No sports award though neither bad recognition! All the way from childhood to date.'
         
     ],
 }
