@@ -48,20 +48,25 @@ export default function LeftPanel({ themePreference, onThemeChange }) {
   // Typewriter on the "> I get things done" line
   const TYPEWRITER_TEXT = '> I get things done . Excellence is Worship'
   const [typed, setTyped] = useState('')
+  const [typingDone, setTypingDone] = useState(false)
   useEffect(() => {
     let i = 0
     setTyped('')
+    setTypingDone(false)
     const interval = setInterval(() => {
       i++
       setTyped(TYPEWRITER_TEXT.slice(0, i))
-      if (i >= TYPEWRITER_TEXT.length) clearInterval(interval)
+      if (i >= TYPEWRITER_TEXT.length) {
+        clearInterval(interval)
+        setTypingDone(true)
+      }
     }, 38)
     return () => clearInterval(interval)
   }, [])
 
-  // Rough-notation: animated box on hire line
+  // Rough-notation: animated box on hire line — fires after typewriter, then loops
   useEffect(() => {
-    if (!hireRef.current) return
+    if (!typingDone || !hireRef.current) return
     const annotation = annotate(hireRef.current, {
       type: 'box',
       color: '#f59e0b',
@@ -72,12 +77,25 @@ export default function LeftPanel({ themePreference, onThemeChange }) {
       iterations: 2,
       multiline: true,
     })
-    const timer = setTimeout(() => annotation.show(), 400)
+
+    const play = () => {
+      annotation.hide()
+      annotation.show()
+    }
+
+    const initial = setTimeout(() => {
+      annotation.show()
+    }, 120)
+
+    // Re-animate every 9 seconds
+    const loop = setInterval(play, 9000)
+
     return () => {
-      clearTimeout(timer)
+      clearTimeout(initial)
+      clearInterval(loop)
       annotation.remove()
     }
-  }, [])
+  }, [typingDone])
 
 
   useEffect(() => {
