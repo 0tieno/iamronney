@@ -476,8 +476,7 @@ export const conferences = {
 
 export const achievements = {
     paragraphs: [
-        'I have received several awards and recognitions spanning leadership, career and in spritual sphere. No sports award though neither bad recognition either! All the way from childhood to date.',
-        'The first one I remember I was told.',
-        'The last one I know, it was a global recognition award and honor.',
+        'I have received several awards and recognitions spanning leadership, career and in spritual sphere. No sports award though neither bad recognition either! All the way from childhood to date.'
+        
     ],
 }
