@@ -1,5 +1,69 @@
+import { useRef, useState } from 'react'
 import { achievements } from '../../data/content'
 import { useRoughUnderline } from '../../hooks/useRoughUnderline'
+
+const LENS_SIZE = 160
+const ZOOM = 2.8
+
+function MagnifierImage({ src, alt }) {
+  const imgRef = useRef(null)
+  const [lens, setLens] = useState(null) // { x, y, bgX, bgY, w, h }
+
+  function handleMouseMove(e) {
+    const img = imgRef.current
+    if (!img) return
+    const rect = img.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const bgX = -(x * ZOOM - LENS_SIZE / 2)
+    const bgY = -(y * ZOOM - LENS_SIZE / 2)
+    setLens({ x, y, bgX, bgY, w: rect.width, h: rect.height })
+  }
+
+  function handleMouseLeave() {
+    setLens(null)
+  }
+
+  const lensLeft = lens ? Math.min(Math.max(lens.x - LENS_SIZE / 2, 0), lens.w - LENS_SIZE) : 0
+  const lensTop  = lens ? Math.min(Math.max(lens.y - LENS_SIZE / 2, 0), lens.h - LENS_SIZE) : 0
+
+  return (
+    <div
+      className="relative select-none"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <img
+        ref={imgRef}
+        src={src}
+        alt={alt}
+        className="w-full h-auto block transition-all duration-500 ease-out"
+        draggable={false}
+      />
+      {lens && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: lensLeft,
+            top: lensTop,
+            width: LENS_SIZE,
+            height: LENS_SIZE,
+            borderRadius: '50%',
+            border: '2px solid rgba(255,255,255,0.6)',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.35)',
+            backgroundImage: `url(${src})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: `${lens.w * ZOOM}px ${lens.h * ZOOM}px`,
+            backgroundPosition: `${lens.bgX}px ${lens.bgY}px`,
+            pointerEvents: 'none',
+            cursor: 'none',
+          }}
+        />
+      )}
+    </div>
+  )
+}
 
 export default function Achievements() {
   const headingRef = useRoughUnderline('#22c55e', 300)
@@ -22,11 +86,10 @@ export default function Achievements() {
         <p className="text-[0.75rem] font-mono uppercase tracking-[0.14em] text-stone-400 mb-3">
           — Microsoft MVP Certificate, Dec 2025
         </p>
-        <div className="scanline-wrap rounded-xl overflow-hidden shadow-[0_8px_32px_-8px_rgba(0,0,0,0.18)] grayscale hover:grayscale-0 transition-all duration-500">
-          <img
+        <div className="scanline-wrap rounded-xl overflow-hidden shadow-[0_8px_32px_-8px_rgba(0,0,0,0.18)] grayscale hover:grayscale-0 transition-all duration-500 cursor-none">
+          <MagnifierImage
             src={`${import.meta.env.BASE_URL}mvp-certificate.png`}
             alt="Microsoft Most Valuable Professional certificate awarded to Ronney Otieno, Security, December 2025"
-            className="w-full h-auto block transition-transform duration-500 ease-out hover:scale-110"
           />
         </div>
       </div>
