@@ -1,7 +1,32 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { annotate } from 'rough-notation'
 import { posts } from '../../data/content'
 import { useRoughUnderline } from '../../hooks/useRoughUnderline'
+
+function RoughTag({ children }) {
+  const ref = useRef(null)
+  useEffect(() => {
+    if (!ref.current) return
+    const annotation = annotate(ref.current, {
+      type: 'highlight',
+      color: 'rgba(251,191,36,0.32)',
+      animationDuration: 400,
+      animate: true,
+      iterations: 1,
+    })
+    const timer = setTimeout(() => annotation.show(), 300)
+    return () => {
+      clearTimeout(timer)
+      annotation.remove()
+    }
+  }, [])
+  return (
+    <span ref={ref} className="text-[0.7rem] font-semibold uppercase tracking-widest text-brand-green">
+      {children}
+    </span>
+  )
+}
 
 function PostDetail({ post }) {
   const navigate = useNavigate()
@@ -93,9 +118,7 @@ export default function Posts() {
         {posts.map((post) => (
           <li key={post.slug} className="border-b border-stone-100 pb-8 last:border-0 last:pb-0">
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-[0.7rem] font-semibold uppercase tracking-widest text-brand-green">
-                {post.tag}
-              </span>
+              <RoughTag>{post.tag}</RoughTag>
               <span className="text-[0.75rem] text-stone-400">{post.date}</span>
             </div>
             <Link
