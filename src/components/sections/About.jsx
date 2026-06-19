@@ -1,8 +1,28 @@
+import { useEffect, useRef } from 'react'
+import { annotate } from 'rough-notation'
 import { about } from '../../data/content'
 import { useRoughUnderline } from '../../hooks/useRoughUnderline'
 
 export default function About() {
   const headingRef = useRoughUnderline('#22c55e', 300)
+  const strikeRef = useRef(null)
+
+  useEffect(() => {
+    if (!strikeRef.current) return
+    const annotation = annotate(strikeRef.current, {
+      type: 'strike-through',
+      color: '#78716c',
+      strokeWidth: 2,
+      animate: true,
+      animationDuration: 600,
+      iterations: 2,
+    })
+    const timer = setTimeout(() => annotation.show(), 500)
+    return () => {
+      clearTimeout(timer)
+      annotation.remove()
+    }
+  }, [])
   return (
     <section
       aria-labelledby="about-heading"
@@ -22,7 +42,7 @@ export default function About() {
       </p>
 
       <p className="text-[1.9rem] text-stone-900 mb-6 leading-none">
-        <span className="line-through decoration-stone-700 decoration-[1px]">Not in the News</span>
+        <span ref={strikeRef}>Not</span> in the News
       </p>
 
       <ul className="list-disc pl-6 space-y-2 text-[0.9rem] text-stone-900 leading-[1.65] mb-9">
