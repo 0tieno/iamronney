@@ -28,7 +28,7 @@ export default function Work() {
           <details key={i} className="group relative pl-5 py-1.5">
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute -left-[7px] top-[15px] h-3 w-3 rounded-full border-2 border-stone-300 bg-white transition-colors duration-200 group-open:border-brand-green group-open:bg-brand-green"
+              className="timeline-dot pointer-events-none absolute -left-[7px] top-[15px] h-3 w-3 rounded-full border-2 border-stone-300 bg-white transition-colors duration-200"
             />
             <summary className="flex items-center justify-between gap-4 cursor-pointer py-1.5 list-none [&::-webkit-details-marker]:hidden select-none">
               <span className="text-[0.9rem] leading-[1.7]">
