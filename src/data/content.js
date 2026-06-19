@@ -2,7 +2,7 @@
 export const profile = {
     name: 'i am ronney otieno.',
     taglines: [
-        'hacker(offensive & defensive security and ctf player) | swe ++founder -- open source creator | speaker - writer - poet | dreamer - thinker - doer -lover of God.',
+        'swe • AI & Cloud Security and ctf player | ++founder -- open source creator | speaker - writer - poet | dreamer - thinker - doer - lover of God.',
         'hire or refer me for cyber security, backend software engineering or DevSecOps roles. thank you!',
     ],
     email: 'ronney.onyango.otieno@gmail.com',
