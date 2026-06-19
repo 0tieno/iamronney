@@ -5,6 +5,9 @@ import { useRoughUnderline } from '../../hooks/useRoughUnderline'
 
 export default function About() {
   const headingRef = useRoughUnderline('#22c55e', 300)
+  const year2025Ref = useRoughUnderline('#f59e0b', 500)
+  const year2024Ref = useRoughUnderline('#f59e0b', 750)
+  const year2023Ref = useRoughUnderline('#f59e0b', 1000)
   const strikeRef = useRef(null)
 
   useEffect(() => {
@@ -57,7 +60,7 @@ export default function About() {
         <li>2021-2025: Served the highest position of privilege on earth.</li>
       </ul>
 
-      <h3 className="rhythm-subheading text-[2rem] font-medium text-stone-900 mb-4">2025</h3>
+      <h3 className="rhythm-subheading text-[2rem] font-medium text-stone-900 mb-4"><span ref={year2025Ref}>2025</span></h3>
       <ul className="list-disc pl-6 space-y-1.5 text-[0.9rem] text-stone-900 leading-[1.65] mb-9">
         <li>Dec 1st: Awarded global technical expertise by Microsoft</li>
         <li>Oct 31: Backend intern at Safaricom PLC</li>
@@ -81,7 +84,7 @@ export default function About() {
         <li>April 8: Open source creator</li>
       </ul>
 
-      <h3 className="rhythm-subheading text-[2rem] font-medium text-stone-900 mb-4">2024</h3>
+      <h3 className="rhythm-subheading text-[2rem] font-medium text-stone-900 mb-4"><span ref={year2024Ref}>2024</span></h3>
       <ul className="list-disc pl-6 space-y-1.5 text-[0.9rem] text-stone-900 leading-[1.65] mb-9">
         <li>
           November 31: [As a Team] received recognition award by Microsoft ADC as the{' '}
@@ -91,7 +94,7 @@ export default function About() {
         </li>
       </ul>
 
-      <h3 className="rhythm-subheading text-[2rem] font-medium text-stone-900 mb-4">2023</h3>
+      <h3 className="rhythm-subheading text-[2rem] font-medium text-stone-900 mb-4"><span ref={year2023Ref}>2023</span></h3>
       <ul className="list-disc pl-6 space-y-1.5 text-[0.9rem] text-stone-900 leading-[1.65]">
         <li>
           November 31: Joined Global tech program -{' '}
