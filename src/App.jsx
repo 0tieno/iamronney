@@ -1,5 +1,6 @@
-import { Suspense, lazy, useEffect, useState } from 'react'
-import { Navigate, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
+import { Navigate, NavLink, Route, Routes, useLocation, useMatch, useNavigate } from 'react-router-dom'
+import { annotate } from 'rough-notation'
 import LeftPanel from './components/LeftPanel'
 import TerminalPanel from './components/TerminalPanel'
 import ReconMinimap from './components/ReconMinimap'
@@ -8,6 +9,54 @@ import NotFound from './components/sections/NotFound'
 import { navItems, profile } from './data/content'
 import { ROUTE_BY_ID } from './app/config'
 import { applyRouteMetadata } from './app/metadata'
+
+function AnnotatedNavLink({ to, label, isLast }) {
+  const spanRef = useRef(null)
+  const annotationRef = useRef(null)
+  const match = useMatch(to)
+  const isActive = Boolean(match)
+
+  useEffect(() => {
+    if (!spanRef.current) return
+    if (isActive) {
+      const ann = annotate(spanRef.current, {
+        type: 'bracket',
+        color: '#f59e0b',
+        strokeWidth: 1.5,
+        padding: 3,
+        animate: true,
+        animationDuration: 400,
+        brackets: ['left', 'right'],
+      })
+      annotationRef.current = ann
+      ann.show()
+    } else {
+      annotationRef.current?.remove()
+      annotationRef.current = null
+    }
+    return () => {
+      annotationRef.current?.remove()
+      annotationRef.current = null
+    }
+  }, [isActive])
+
+  return (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        [
+          'px-[0.5rem] leading-none bg-transparent border-0 cursor-pointer no-underline',
+          !isLast ? 'border-r border-stone-200' : '',
+          isActive ? 'font-semibold text-stone-900' : 'text-brand-blue hover:text-stone-900',
+        ]
+          .filter(Boolean)
+          .join(' ')
+      }
+    >
+      <span ref={spanRef}>{label}</span>
+    </NavLink>
+  )
+}
 import { useThemePreference } from './hooks/useThemePreference'
 import { useAnalystConsole } from './hooks/useAnalystConsole'
 
@@ -145,21 +194,12 @@ export default function App() {
             >
 
               {navItems.map(({ id, label }, idx) => (
-                <NavLink
+                <AnnotatedNavLink
                   key={id}
                   to={ROUTE_BY_ID[id]}
-                  className={({ isActive }) => [
-                    'px-[0.5rem] leading-none bg-transparent border-0 cursor-pointer no-underline',
-                    idx < navItems.length - 1 ? 'border-r border-stone-200' : '',
-                    isActive
-                      ? 'font-semibold text-stone-900 underline underline-offset-[3px]'
-                      : 'text-brand-blue hover:text-stone-900 hover:underline hover:underline-offset-[3px]',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                >
-                  {label}
-                </NavLink>
+                  label={label}
+                  isLast={idx === navItems.length - 1}
+                />
               ))}
             </nav>
 
