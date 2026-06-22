@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { achievements } from '../../data/content'
 import { useRoughUnderline } from '../../hooks/useRoughUnderline'
 
+
 const LENS_SIZE = 160
 const ZOOM = 2.8
 
@@ -141,37 +142,6 @@ export default function Achievements() {
         </div>
       </div>
 
-      {/* TryHackMe Badge */}
-      <div className="mt-6 max-w-[760px]">
-        <div className="rounded-xl border border-stone-200 overflow-hidden shadow-[0_6px_28px_-8px_rgba(0,0,0,0.13)] group/thm">
-          {/* Card header */}
-          <div className="flex items-center gap-2.5 border-b border-stone-100 bg-stone-50 px-4 py-2.5">
-            {/* Shield icon */}
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-stone-500 shrink-0" aria-hidden="true">
-              <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7l-9-5z"/>
-            </svg>
-            <span className="font-mono text-[0.72rem] text-stone-700 font-medium">tryhackme.com/p/r0ti3n0</span>
-            <span className="ml-auto font-mono text-[0.62rem] uppercase tracking-[0.12em] text-stone-400">hacker stats</span>
-          </div>
-          {/* Badge */}
-          <div className="scanline-wrap bg-white px-5 py-5 flex justify-start grayscale group-hover/thm:grayscale-0 transition-all duration-500">
-            <a
-              href="https://tryhackme.com/p/r0ti3n0"
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="TryHackMe profile for r0ti3n0"
-            >
-              <img
-                src="https://tryhackme-badges.s3.amazonaws.com/r0ti3n0.png"
-                alt="TryHackMe stats for r0ti3n0"
-                className="h-auto block"
-                loading="lazy"
-                onError={(e) => { e.currentTarget.style.display = 'none' }}
-              />
-            </a>
-          </div>
-        </div>
-      </div>
     </section>
   )
 }
