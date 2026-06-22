@@ -142,6 +142,24 @@ export default function Achievements() {
         </div>
       </div>
 
+      {/* TryHackMe stat */}
+      <div className="mt-6 max-w-[760px] flex items-center gap-3">
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-stone-400 shrink-0" aria-hidden="true">
+          <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7l-9-5z"/>
+        </svg>
+        <span className="text-[0.9rem] text-stone-700">
+          Ranked{' '}
+          <a
+            href="https://tryhackme.com/p/r0ti3n0"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="font-semibold text-stone-900 hover:text-brand-blue hover:underline underline-offset-[3px] transition-colors"
+          >
+            top 8% globally on TryHackMe
+          </a>
+        </span>
+      </div>
+
     </section>
   )
 }
