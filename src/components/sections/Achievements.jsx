@@ -155,7 +155,7 @@ export default function Achievements() {
             rel="noreferrer noopener"
             className="font-semibold text-stone-900 hover:text-brand-blue hover:underline underline-offset-[3px] transition-colors"
           >
-            top 8% globally on TryHackMe
+            top 5% globally on TryHackMe
           </a>
         </span>
       </div>
