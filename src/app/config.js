@@ -5,6 +5,7 @@ export const ROUTE_BY_ID = {
     about: '/about',
     conferences: '/conferences',
     achievements: '/achievements',
+    research: '/research',
     posts: '/posts',
 }
 
@@ -13,6 +14,7 @@ export const LABEL_BY_PATH = {
     '/about': navItems.find(({ id }) => id === 'about')?.label ?? 'About',
     '/conferences': navItems.find(({ id }) => id === 'conferences')?.label ?? 'Conferences',
     '/achievements': navItems.find(({ id }) => id === 'achievements')?.label ?? 'Achievements',
+    '/research': navItems.find(({ id }) => id === 'research')?.label ?? 'Research',
     '/posts': navItems.find(({ id }) => id === 'posts')?.label ?? 'Posts',
 }
 
@@ -24,6 +26,7 @@ export const ARTIFACT_BY_PATH = {
     '/about': 'artifact.route.about',
     '/conferences': 'artifact.route.conferences',
     '/achievements': 'artifact.route.achievements',
+    '/research': 'artifact.route.research',
     '/posts': 'artifact.route.posts',
 }
 
@@ -51,6 +54,7 @@ export const RECON_NODES = [
     { path: '/about', short: 'abt', x: 52, y: 24 },
     { path: '/conferences', short: 'cnf', x: 96, y: 16 },
     { path: '/achievements', short: 'ach', x: 62, y: 73 },
+    { path: '/research', short: 'rsc', x: 86, y: 88 },
     { path: '/posts', short: 'pst', x: 108, y: 58 },
 ]
 
@@ -61,6 +65,8 @@ export const RECON_EDGES = [
     ['/achievements', '/posts'],
     ['/work', '/achievements'],
     ['/conferences', '/posts'],
+    ['/achievements', '/research'],
+    ['/research', '/posts'],
 ]
 
 export const MAX_INCIDENTS = 30
@@ -75,6 +81,7 @@ export const TERMINAL_COMMANDS = [
     'awards',
     'achievements',
     'conferences',
+    'research',
     'posts',
     'blog',
     'home',
