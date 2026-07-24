@@ -190,13 +190,14 @@ export function useAnalystConsole({ pathname, navigate }) {
             achievements: '/achievements',
             work: '/work',
             conferences: '/conferences',
+            research: '/research',
             posts: '/posts',
             blog: '/posts',
             home: '/work',
         }
 
         if (command === 'help') {
-            setCommandOutput('whoami | about | work | skills | awards | conferences | posts | contact | resume | scan | artifacts | incidents | clear | dream | trace | entropy | ghost')
+            setCommandOutput('whoami | about | work | skills | awards | conferences | research | posts | contact | resume | scan | artifacts | incidents | clear | dream | trace | entropy | ghost')
             setCommandInput('')
             return
         }
