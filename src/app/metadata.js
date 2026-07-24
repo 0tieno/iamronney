@@ -1,4 +1,4 @@
-import { about, achievements, conferences, posts, work } from '../data/content'
+import { about, achievements, conferences, posts, researchPublications, work } from '../data/content'
 import { DEFAULT_SHARE_IMAGE, SITE_URL } from './config'
 
 export function firstTwoSentences(value) {
@@ -53,6 +53,11 @@ const META_BY_PATH = {
         description: toMetaExcerpt(achievements.paragraphs?.[0]),
         type: 'website',
     },
+    '/research': {
+        title: 'Research',
+        description: toMetaExcerpt(researchPublications[0]?.excerpt),
+        type: 'website',
+    },
     '/posts': {
         title: 'Posts',
         description: toMetaExcerpt(posts[0]?.body?.[0] ?? posts[0]?.excerpt),
@@ -102,6 +107,18 @@ export function getMetaForPath(pathname) {
         return {
             title: matchedPost.title,
             description: toMetaExcerpt(matchedPost.body?.[0] ?? matchedPost.excerpt),
+            type: 'article',
+        }
+    }
+
+    const matchedPublication = pathname.startsWith('/research/')
+        ? researchPublications.find(({ slug }) => pathname === `/research/${slug}`)
+        : null
+
+    if (matchedPublication) {
+        return {
+            title: matchedPublication.title,
+            description: toMetaExcerpt(matchedPublication.tagline ?? matchedPublication.excerpt),
             type: 'article',
         }
     }
