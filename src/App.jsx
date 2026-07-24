@@ -63,6 +63,7 @@ import { useAnalystConsole } from './hooks/useAnalystConsole'
 const About = lazy(() => import('./components/sections/About'))
 const Conferences = lazy(() => import('./components/sections/Conferences'))
 const Achievements = lazy(() => import('./components/sections/Achievements'))
+const Research = lazy(() => import('./components/sections/Research'))
 const Posts = lazy(() => import('./components/sections/Posts'))
 
 export default function App() {
@@ -217,6 +218,8 @@ export default function App() {
                   <Route path="/about" element={<About />} />
                   <Route path="/conferences" element={<Conferences />} />
                   <Route path="/achievements" element={<Achievements />} />
+                  <Route path="/research" element={<Research />} />
+                  <Route path="/research/:slug" element={<Research />} />
                   <Route path="/posts" element={<Posts />} />
                   <Route path="/posts/:slug" element={<Posts />} />
                   <Route path="*" element={<NotFound />} />
