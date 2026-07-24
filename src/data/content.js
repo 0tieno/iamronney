@@ -29,6 +29,7 @@ export const navItems = [
     { id: 'about', label: 'About' },
     { id: 'conferences', label: 'Conferences, Presentations & Publications' },
     { id: 'achievements', label: 'Achievements, Honors & Awards' },
+    { id: 'research', label: 'Research' },
     { id: 'posts', label: 'Posts' },
 ]
 
@@ -388,6 +389,295 @@ export const posts = [
     },
 ]
 
+// ─── Research ────────────────────────────────────────────────────────────────
+export const researchPublications = [
+    {
+        slug: 'research-charter',
+        kicker: 'SecureCloudX Research Hub',
+        title: 'Research Charter',
+        tagline: 'Building Trusted Cybersecurity Intelligence for Better Decisions',
+        date: 'July 2026',
+        tag: 'Governance',
+        excerpt:
+            "The foundational governance document defining SecureCloudX Research's independence, methodology, ethics, and publication standards.",
+        meta: [
+            { label: 'Version', value: '1.0' },
+            { label: 'Publication Date', value: 'July 2026' },
+            { label: 'Applies To', value: 'All SecureCloudX Research Publications' },
+            { label: 'Status', value: 'Foundational Governance Document' },
+        ],
+        sections: [
+            {
+                heading: 'Executive Statement',
+                blocks: [
+                    { type: 'p', text: 'Cybersecurity has become one of the defining risks of the digital age. Every government, financial institution, business, university, healthcare provider, and citizen increasingly depends upon secure digital systems to operate safely, efficiently, and with confidence.' },
+                    { type: 'p', text: 'While cyber threats continue to evolve rapidly, decision-makers often lack objective, locally relevant, evidence-based research that enables informed strategic decisions.' },
+                    { type: 'p', text: 'Many existing publications focus on individual incidents, vendor-specific intelligence, or global trends. Few provide an independent, comprehensive, and transparent assessment of cybersecurity resilience within the Kenyan context.' },
+                    { type: 'p', text: 'SecureCloudX Research was established to help bridge this gap.' },
+                    { type: 'p', text: 'Our mission is not merely to report cyber incidents, but to transform fragmented information into trusted intelligence that supports better governance, stronger resilience, more effective policy, and more informed investment decisions.' },
+                    { type: 'p', text: 'Every SecureCloudX publication is guided by rigorous research principles, transparent methodologies, and a commitment to public value.' },
+                ],
+            },
+            {
+                heading: 'Our Vision',
+                blocks: [
+                    { type: 'p', text: "To become Africa's most trusted independent cybersecurity research institution, producing evidence-based intelligence that strengthens digital resilience, informs national policy, and supports executive decision-making." },
+                ],
+            },
+            {
+                heading: 'Our Mission',
+                blocks: [
+                    { type: 'p', text: 'To produce world-class cybersecurity research that enables governments, regulators, boards of directors, executives, researchers, and security professionals to make informed decisions through objective analysis, transparent methodologies, and actionable recommendations.' },
+                ],
+            },
+            {
+                heading: 'Why We Exist',
+                blocks: [
+                    { type: 'p', text: 'Digital transformation has accelerated across every sector of the Kenyan economy.' },
+                    { type: 'list', items: ['Banking', 'Healthcare', 'Energy', 'Government', 'Telecommunications', 'Manufacturing', 'Education', 'Transportation', 'Cloud computing', 'Artificial Intelligence'] },
+                    { type: 'p', text: 'Every advancement creates new opportunities while simultaneously expanding cyber risk.' },
+                    { type: 'p', text: 'Yet questions remain:' },
+                    { type: 'list', items: ['How resilient are our critical sectors?', 'Which threats are increasing?', 'Where should organizations invest?', 'What lessons emerge across industries?', 'Which security strategies are proving effective?', 'Where are the greatest systemic risks?'] },
+                    { type: 'p', text: 'Our research exists to answer these questions through evidence rather than speculation.' },
+                ],
+            },
+            {
+                heading: 'Purpose of This Charter',
+                blocks: [
+                    { type: 'p', text: 'This charter establishes the governance principles, research standards, ethical framework, and publication methodology that guide every SecureCloudX Research publication.' },
+                    { type: 'p', text: 'It ensures consistency, transparency, credibility, and accountability across all research activities.' },
+                ],
+            },
+            {
+                heading: 'Research Philosophy',
+                blocks: [
+                    { type: 'p', text: 'Our work is founded upon one central belief:' },
+                    { type: 'p', text: 'Better cybersecurity decisions require better evidence.' },
+                    { type: 'p', text: 'We believe cybersecurity research should:' },
+                    { type: 'list', items: ['Inform rather than persuade.', 'Analyze rather than speculate.', 'Educate rather than sensationalize.', 'Build resilience rather than assign blame.'] },
+                    { type: 'p', text: 'Our objective is to strengthen ecosystems—not to identify winners and losers.' },
+                ],
+            },
+            {
+                heading: 'Guiding Principles',
+                blocks: [],
+                subsections: [
+                    {
+                        heading: '1. Independence',
+                        blocks: [
+                            { type: 'p', text: 'SecureCloudX Research operates independently of commercial vendors, political interests, and organizational influence.' },
+                            { type: 'p', text: 'Research findings shall never be altered to satisfy sponsors, partners, governments, or private organizations.' },
+                            { type: 'p', text: 'Independence is fundamental to credibility.' },
+                        ],
+                    },
+                    {
+                        heading: '2. Objectivity',
+                        blocks: [
+                            { type: 'p', text: 'All conclusions shall be supported by verifiable evidence.' },
+                            { type: 'p', text: 'Researchers shall distinguish clearly between:' },
+                            { type: 'list', items: ['Observed facts', 'Analytical interpretation', 'Expert opinion', 'Forecasts', 'Assumptions'] },
+                            { type: 'p', text: 'Readers should always understand which is which.' },
+                        ],
+                    },
+                    {
+                        heading: '3. Transparency',
+                        blocks: [
+                            { type: 'p', text: 'Every report shall clearly disclose:' },
+                            { type: 'list', items: ['Research methodology', 'Data sources', 'Inclusion criteria', 'Validation process', 'Assumptions', 'Limitations'] },
+                            { type: 'p', text: 'Transparency enables trust.' },
+                        ],
+                    },
+                    {
+                        heading: '4. Accuracy',
+                        blocks: [
+                            { type: 'p', text: 'Every reasonable effort shall be made to verify published information through multiple reliable sources.' },
+                            { type: 'p', text: 'Where uncertainty exists, uncertainty shall be explicitly acknowledged.' },
+                        ],
+                    },
+                    {
+                        heading: '5. Evidence First',
+                        blocks: [
+                            { type: 'p', text: 'Claims shall not be made without sufficient supporting evidence.' },
+                            { type: 'p', text: 'A compelling narrative shall never outweigh factual accuracy.' },
+                        ],
+                    },
+                    {
+                        heading: '6. Public Value',
+                        blocks: [
+                            { type: 'p', text: 'Research should contribute positively to cybersecurity maturity, national resilience, and public understanding.' },
+                        ],
+                    },
+                ],
+            },
+            {
+                heading: 'Research Ethics',
+                blocks: [
+                    { type: 'p', text: 'SecureCloudX Research commits to the highest standards of research integrity.' },
+                    { type: 'p', text: 'Researchers shall:' },
+                    { type: 'list', items: ['Avoid conflicts of interest.', 'Correct errors promptly.', 'Respect confidentiality.', 'Attribute all external work appropriately.', 'Avoid plagiarism.', 'Avoid sensationalism.', 'Never fabricate or manipulate data.'] },
+                    { type: 'p', text: 'Integrity is non-negotiable.' },
+                ],
+            },
+            {
+                heading: 'Research Scope',
+                blocks: [
+                    { type: 'p', text: 'SecureCloudX Research produces studies across multiple domains, including:' },
+                    { type: 'list', items: ['Banking cybersecurity', 'Critical infrastructure security', 'National cyber resilience', 'Cloud security', 'Artificial intelligence security', 'Identity security', 'Threat intelligence', 'Operational technology (OT)', 'Cyber policy and governance', 'Emerging technologies'] },
+                    { type: 'p', text: 'Each publication shall define its scope explicitly.' },
+                ],
+            },
+            {
+                heading: 'Research Methodology Framework',
+                blocks: [
+                    { type: 'p', text: 'Every research project shall follow a standardized lifecycle.' },
+                ],
+                subsections: [
+                    {
+                        heading: 'Phase 1 – Research Design',
+                        blocks: [
+                            { type: 'list', items: ['Define research question.', 'Define objectives.', 'Define scope.', 'Identify stakeholders.', 'Develop methodology.', 'Establish inclusion criteria.'] },
+                        ],
+                    },
+                    {
+                        heading: 'Phase 2 – Data Collection',
+                        blocks: [
+                            { type: 'p', text: 'Information may be collected from:' },
+                            { type: 'list', items: ['Regulatory publications', 'Government reports', 'Annual reports', 'Academic literature', 'Security advisories', 'Vendor intelligence reports', 'Public disclosures', 'Court records', 'Incident reports', 'Publicly available datasets', 'Interviews (where applicable)'] },
+                        ],
+                    },
+                    {
+                        heading: 'Phase 3 – Validation',
+                        blocks: [
+                            { type: 'p', text: 'Information shall be:' },
+                            { type: 'list', items: ['Cross-referenced.', 'Verified.', 'Classified.', 'Documented.', 'Assigned confidence levels.'] },
+                            { type: 'p', text: 'No significant conclusion shall rely upon a single unverified source where corroboration is reasonably possible.' },
+                        ],
+                    },
+                    {
+                        heading: 'Phase 4 – Analysis',
+                        blocks: [
+                            { type: 'p', text: 'Researchers shall identify:' },
+                            { type: 'list', items: ['Patterns', 'Trends', 'Relationships', 'Emerging risks', 'Sector-wide observations', 'Lessons learned'] },
+                            { type: 'p', text: 'Analysis should distinguish correlation from causation unless supported by evidence.' },
+                        ],
+                    },
+                    {
+                        heading: 'Phase 5 – Peer Review',
+                        blocks: [
+                            { type: 'p', text: 'Major publications should undergo independent technical and editorial review before publication.' },
+                            { type: 'p', text: 'Reviewers may include:' },
+                            { type: 'list', items: ['CISOs', 'Security engineers', 'Academics', 'Policy experts', 'Legal professionals', 'Industry specialists'] },
+                            { type: 'p', text: 'Peer review strengthens quality; it does not transfer responsibility for the final content.' },
+                        ],
+                    },
+                    {
+                        heading: 'Phase 6 – Publication',
+                        blocks: [
+                            { type: 'p', text: 'Reports shall include:' },
+                            { type: 'list', items: ['Methodology', 'Limitations', 'References', 'Supporting evidence', 'Version number', 'Publication date'] },
+                        ],
+                    },
+                    {
+                        heading: 'Phase 7 – Continuous Improvement',
+                        blocks: [
+                            { type: 'p', text: 'Research does not end at publication.' },
+                            { type: 'p', text: 'Where new evidence emerges:' },
+                            { type: 'list', items: ['Corrections shall be issued.', 'Datasets updated where appropriate.', 'Future editions refined.'] },
+                        ],
+                    },
+                ],
+            },
+            {
+                heading: 'Evidence Standards',
+                blocks: [
+                    { type: 'p', text: 'Sources shall be evaluated according to reliability and relevance.' },
+                    { type: 'p', text: 'Illustrative hierarchy:' },
+                    { type: 'list', items: ['Primary sources (official statements, regulatory filings, court judgments, standards)', 'Peer-reviewed research', 'Official organizational reports', 'Reputable industry reports', 'Credible journalism', 'Independent technical analyses'] },
+                    { type: 'p', text: 'Conflicting evidence shall be discussed rather than ignored.' },
+                ],
+            },
+            {
+                heading: 'Incident Classification Framework',
+                blocks: [
+                    { type: 'p', text: 'Each analyzed cybersecurity incident should be documented consistently.' },
+                    { type: 'p', text: 'Typical fields include:' },
+                    { type: 'list', items: ['Date', 'Sector', 'Organization type', 'Attack vector', 'Threat actor attribution (if publicly supported)', 'Affected assets', 'Business impact', 'Customer impact', 'Recovery observations', 'Public communications', 'Relevant ATT&CK techniques', 'Source references', 'Confidence level'] },
+                ],
+            },
+            {
+                heading: 'Analytical Standards',
+                blocks: [
+                    { type: 'p', text: 'SecureCloudX Research seeks to answer:' },
+                    { type: 'list', items: ['What happened?', 'Why did it happen?', 'What patterns exist?', 'What lessons emerge?', 'What decisions should leaders consider?'] },
+                    { type: 'p', text: 'The purpose is not to assign fault, but to extract insight.' },
+                ],
+            },
+            {
+                heading: 'Neutrality Policy',
+                blocks: [
+                    { type: 'p', text: 'SecureCloudX Research does not rank organizations based on incomplete or confidential information.' },
+                    { type: 'p', text: 'Reports shall avoid language such as:' },
+                    { type: 'quote', text: '"Bank X has poor cybersecurity."' },
+                    { type: 'p', text: 'Instead:' },
+                    { type: 'quote', text: '"Based on publicly available evidence, this report observed differences in public disclosure practices and incident response communications across institutions."' },
+                    { type: 'p', text: 'Language matters because credibility depends on precision.' },
+                ],
+            },
+            {
+                heading: 'Handling Sensitive Information',
+                blocks: [
+                    { type: 'p', text: 'SecureCloudX Research will not knowingly publish:' },
+                    { type: 'list', items: ['Confidential information obtained unlawfully', 'Personal data without a lawful basis', 'Information that could unnecessarily increase operational risk for organizations', 'Technical details that materially facilitate malicious activity'] },
+                    { type: 'p', text: 'Research should contribute to resilience, not exploitation.' },
+                ],
+            },
+            {
+                heading: 'Research Limitations',
+                blocks: [
+                    { type: 'p', text: 'All reports shall clearly acknowledge their boundaries.' },
+                    { type: 'p', text: 'For example:' },
+                    { type: 'list', items: ['Findings reflect publicly available evidence.', 'Undisclosed incidents may exist.', 'Public reporting quality varies.', 'Some observations may change as new information becomes available.'] },
+                    { type: 'p', text: 'Transparency about limitations strengthens confidence in the conclusions.' },
+                ],
+            },
+            {
+                heading: 'Publication Principles',
+                blocks: [
+                    { type: 'p', text: 'Every publication should aim to be:' },
+                    { type: 'list', items: ['Accurate', 'Clear', 'Accessible', 'Actionable', 'Technically rigorous', 'Executive-friendly', 'Visually effective', 'Properly referenced'] },
+                ],
+            },
+            {
+                heading: 'Audience',
+                blocks: [
+                    { type: 'p', text: 'SecureCloudX Research is intended to support:' },
+                    { type: 'list', items: ['Boards of Directors', 'Chief Executive Officers', 'Chief Information Security Officers', 'Chief Information Officers', 'Regulators', 'Government agencies', 'Policymakers', 'Financial institutions', 'Critical infrastructure operators', 'Researchers', 'Universities', 'Security practitioners', 'Journalists', 'Students'] },
+                    { type: 'p', text: 'Each audience should be able to derive practical value from the research.' },
+                ],
+            },
+            {
+                heading: 'Long-Term Commitment',
+                blocks: [
+                    { type: 'p', text: 'SecureCloudX Research is committed to producing recurring publications that enable longitudinal analysis and evidence-based decision-making.' },
+                    { type: 'p', text: 'Each new edition should improve upon the previous through:' },
+                    { type: 'list', items: ['Expanded datasets', 'Enhanced methodologies', 'Broader stakeholder engagement', 'Clearer visualizations', 'Deeper analysis'] },
+                    { type: 'p', text: 'The objective is to build a body of knowledge that becomes more valuable over time.' },
+                ],
+            },
+            {
+                heading: 'Our Commitment',
+                blocks: [
+                    { type: 'p', text: 'We believe cybersecurity research is a public good.' },
+                    { type: 'p', text: 'We recognize that trust is earned through consistency, transparency, and intellectual honesty—not through bold claims or dramatic headlines.' },
+                    { type: 'p', text: 'Accordingly, SecureCloudX Research commits to publishing work that is:' },
+                    { type: 'list', items: ['Independent in judgment', 'Transparent in method', 'Grounded in evidence', 'Respectful of ethical responsibilities', 'Useful to decision-makers', 'Open to constructive scrutiny', 'Continuously improved as knowledge evolves'] },
+                    { type: 'p', text: "Our aspiration is that every report we publish helps strengthen the resilience of organizations, supports informed public policy, advances cybersecurity practice, and contributes meaningfully to Kenya's digital future." },
+                ],
+            },
+        ],
+    },
+]
+
 // ─── Work ────────────────────────────────────────────────────────────────────
 export const work = {
     introParagraphs: [
@@ -476,6 +766,6 @@ export const conferences = {
 export const achievements = {
     paragraphs: [
         'I have received several awards and recognitions spanning leadership, career and in spritual sphere. No sports award though neither bad recognition! All the way from childhood to date.'
-        
+
     ],
 }
