@@ -195,7 +195,7 @@ export default function LeftPanel({ themePreference, onThemeChange }) {
               Microsoft
             </p>
             <p className="text-[0.78rem] font-semibold leading-tight text-stone-800">
-              Security MVP • Cloud & DevSecOps
+              Security MVP • Cloud Security
             </p>
           </div>
 
