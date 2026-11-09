@@ -737,7 +737,7 @@ export const work = {
         {
             role: 'Project & SWE Tech Lead',
             company: 'KYUSDA',
-            period: '2022 – Present',
+            period: '2022 – 2025,
             contributions: [
                 'Led technical execution, mentoring contributors and coordinating delivery timelines.',
                 'Shaped architecture and implementation decisions for core engineering initiatives.',
