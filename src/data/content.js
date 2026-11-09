@@ -708,7 +708,7 @@ export const work = {
         {
             role: 'Software Engineer',
             company: 'Verge Advisory Partners',
-            period: "2025 – 'Present",
+            period: "2024 – 2025",
             contributions: [
                 'Translated business requirements and delivered end-to-end software tools that the business loved and used.',
                 'I debug them all the time. I know why.',
