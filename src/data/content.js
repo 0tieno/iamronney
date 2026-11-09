@@ -698,7 +698,7 @@ export const work = {
         {
             role: 'Backend SWE',
             company: 'Safaricom PLC',
-            period: "2025 – 'Present",
+            period: "2025 – 2026",
             contributions: [
                 'Safaricom is the biggest corporate technology company in the country (Kenya, Ethiopia) controlling about 80% of all mobile money and mobile service usage in the country. Developed solutions here hit users in the millions per week. Currently close to 60 million subscribers in one Network. It runs the biggest fintech platform [Mpesa] in Africa. It is all about transforming Lives!',
                 'Joined as an intern, internship ended. I am still here at safaricom.',
